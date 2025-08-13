@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		751116A42E4D1B3F002E91A7 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 751116A32E4D1B35002E91A7 /* .gitignore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		751116872E4D1B25002E91A7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		751116792E4D1B24002E91A7 /* APIChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APIChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		751116862E4D1B25002E91A7 /* APIChallengeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APIChallengeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		751116902E4D1B25002E91A7 /* APIChallengeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APIChallengeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		751116A32E4D1B35002E91A7 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +80,7 @@
 		751116702E4D1B24002E91A7 = {
 			isa = PBXGroup;
 			children = (
+				751116A32E4D1B35002E91A7 /* .gitignore */,
 				7511167B2E4D1B24002E91A7 /* APIChallenge */,
 				751116892E4D1B25002E91A7 /* APIChallengeTests */,
 				751116932E4D1B25002E91A7 /* APIChallengeUITests */,
@@ -212,6 +218,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				751116A42E4D1B3F002E91A7 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
