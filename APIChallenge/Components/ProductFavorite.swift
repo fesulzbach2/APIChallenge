@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductFavorite: View {
     
-    var category: Categories = .Beauty
+    var category: Category = .Beauty
     var name: String = "Producte"
     var price: Double = 0.5
     

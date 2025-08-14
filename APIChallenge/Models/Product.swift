@@ -14,6 +14,8 @@ struct Product: Identifiable, Decodable {
     var title: String
     var price: Double
     var thumbnail: String
+    var category: String
+//    var isFavorite: Bool
 }
 
 struct Location: Decodable {

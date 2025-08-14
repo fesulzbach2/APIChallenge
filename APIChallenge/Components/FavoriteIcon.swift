@@ -32,5 +32,5 @@ struct FavoriteIcon: View {
 }
 
 #Preview {
-    MediumCard(isHorizontal: true, category: .Beauty, text: "Product name with two or more lines goes here", price: 0.0)
+//    MediumCard(isHorizontal: true, category: .Beauty, text: "Product name with two or more lines goes here", price: 0.0)
 }

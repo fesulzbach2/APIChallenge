@@ -7,10 +7,11 @@
 import SwiftUI
 
 struct MediumCard: View {
-    var isHorizontal : Bool?
-    let category: Categories
+    var isHorizontal : Bool
+    let category: Category
     let text: String
-    let price: Double //alterar de ponto pra virgula
+    let price: Double
+    let image: String
     @State private var isFavorite = false
     
     func content() -> some View {
@@ -39,11 +40,31 @@ struct MediumCard: View {
         ZStack {
             if isHorizontal == true {
                 HStack( alignment: .center, spacing: 16) {
-                    category.image
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 160, height: 160)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                    
+                    if (image != nil){
+                        AsyncImage(url: URL(string: image ?? "")) { image in
+                            image
+                                .resizable()
+                                .scaledToFill() // ✅ garante que vai preencher o frame
+                                .frame(width: 160, height: 160)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                        } placeholder: {
+                            category.image
+                                .resizable()
+                                .frame(width: 78, height: 78)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .frame(alignment: .leading)
+                            
+                        }
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        
+                    } else {
+                        category.image
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 160, height: 160)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
                     
                     VStack(alignment: .leading){
                         HStack(alignment: .center){
@@ -64,11 +85,29 @@ struct MediumCard: View {
             } else {
                 VStack(alignment: .leading) {
                     ZStack(alignment: .topTrailing) {
-                        category.image
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 160, height: 160)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                        if (image != nil){
+                            AsyncImage(url: URL(string: image ?? "")) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 160, height: 160)
+                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                            } placeholder: {
+                                category.image
+                                    .resizable()
+                                    .frame(width: 160, height: 160)
+                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                                    .frame(alignment: .leading)
+                                
+                            }
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                        } else {
+                            category.image
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 160, height: 160)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                        }
                         
                         FavoriteIcon(fill: $isFavorite, action: {toggleFavorite(product: "product")})
                         
@@ -85,5 +124,5 @@ struct MediumCard: View {
 }
 
 #Preview {
-    MediumCard(isHorizontal: false, category: .Beauty, text: "Product name with two or more lines goes here", price: 0.0)
+    TabBar()
 }
