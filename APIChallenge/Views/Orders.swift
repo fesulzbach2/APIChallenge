@@ -70,6 +70,7 @@ struct Orders: View {
         .sheet(item: $selectedProduct) { product in
             if let index = viewModel.products.firstIndex(where: { $0.id == product.id }) {
                 Details(product: $viewModel.products[index])
+                    .presentationDragIndicator(.visible)
             }
         }
         

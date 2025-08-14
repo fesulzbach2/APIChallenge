@@ -44,9 +44,11 @@ struct Details: View {
             .padding(.horizontal)
             .scrollIndicators(.hidden)
             
+            .background(.backgroundsPrimary)
+            
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Details")
-            .toolbarBackground(.backgroundsPrimary, for: .navigationBar)
+            .toolbarBackground(.backgroundsSecondary, for: .navigationBar)
             .toolbarBackgroundVisibility(.visible, for: .navigationBar)
             
         }
