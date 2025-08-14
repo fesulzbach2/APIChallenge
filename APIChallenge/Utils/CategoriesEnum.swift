@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-enum Categories {
-    case Beauty
-    case Fragrance
-    case Furniture
-    case Groceries
-    case HomeDecoration
-    case KitchenAccessories
-    case Laptop
-    case MensShirts
-    case MensShoes
+enum Categories: String, CaseIterable {
+    case Beauty = "Beauty"
+    case Fragrance = "Fragrance"
+    case Furniture = "Furniture"
+    case Groceries = "Groceries"
+    case HomeDecoration = "Home Decoration"
+    case KitchenAccessories = "Kitchen Accessories"
+    case Laptop = "Laptop"
+    case MensShirts = "Mens Shirts"
+    case MensShoes = "Mens Shoes"
     
     var image: Image {
         switch self {

@@ -9,13 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        HStack {
+            MediumCard(isHorizontal: false, category: .HomeDecoration, text: "Product name with two or more lines goes here", price: 0.0)
+            Spacer()
+            MediumCard(isHorizontal: false, category: .HomeDecoration, text: "Product name ", price: 0.0)
         }
-        .padding()
+        .padding(.horizontal, 16)
     }
 }
 
