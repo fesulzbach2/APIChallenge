@@ -11,9 +11,6 @@ struct ProductOrder: View {
     
     var product: Product
     
-    var category: Categories = .Beauty
-    var deliveryDate: String = "DELIVERY BY MONTH, 00"
-    
     var body: some View {
         
         HStack(spacing: 16) {
@@ -21,7 +18,7 @@ struct ProductOrder: View {
             AsyncImage(url: URL(string: product.thumbnail)) { image in
                             image.resizable()
                         } placeholder: {
-                            category.image
+                            Image(.placeholder)
                                 .resizable()
                                 .frame(width: 78, height: 78)
                                 .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -35,7 +32,7 @@ struct ProductOrder: View {
             HStack(spacing: 16) {
                 VStack(alignment: .leading, spacing: 4) {
                     
-                    Text(deliveryDate)
+                    Text(product.shippingInformation.uppercased())
                         .fontWeight(.regular)
                         .font(.system(size: 12))
                         .foregroundStyle(.labelsSecondary)

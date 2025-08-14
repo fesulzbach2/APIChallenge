@@ -10,21 +10,13 @@ import SwiftUI
 
 struct Favorites: View {
     
+    let viewModel: ProductViewModel
+    
     var icon: String = "cart.badge.questionmark"
     var headerText: String = "Your cart is empty!"
     var footerText: String = "Add an item to your cart."
     
     @State var empty: Bool = false
-    
-    @State var productList: [ProductFavorite] = [
-        ProductFavorite(category: .Beauty, name: "Product name", price: 120.00),
-        ProductFavorite(category: .Beauty, name: "Product name with two or more lines goes here", price: 40.00),
-        ProductFavorite(category: .Beauty, name: "Product name with two or more lines goes here", price: 100.00),
-        ProductFavorite(category: .Beauty, name: "Product name", price: 100.00),
-        ProductFavorite(category: .Beauty, name: "Product name with two or more lines goes here", price: 99.90),
-
-
-    ]
     
     var body: some View {
         
@@ -35,17 +27,21 @@ struct Favorites: View {
                     EmptyState(icon: "heart.slash", headerText: "No favorites yet!", footerText: "Favorite an item and it will show up here.")
                     
                 } else {
-                    List(productList, id: \.name) { product in
-                        ProductFavorite(category: product.category, name: product.name, price: product.price)
+                    List(viewModel.products) { product in
+                        ProductFavorite(product: product)
                            .padding(.top, 16)
                             .scrollContentBackground(.hidden)
                             .listStyle(.plain)
                             .listRowInsets(EdgeInsets())
+                           // .listRowSeparator(.hidden)
                     }
                   //  .padding(.vertical)
                     .listRowSeparator(.hidden)
                     .listStyle(.plain)
                     .listRowInsets(EdgeInsets())
+                    .refreshable {
+                        await viewModel.loadProducts()
+                    }
                 }
                 
             }
@@ -57,11 +53,11 @@ struct Favorites: View {
         }
         .toolbarBackground(.backgroundsPrimary, for: .tabBar)
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
+        
+        .task {
+            await viewModel.loadProducts()
+        }
          
     }
         
-}
-
-#Preview {
-    TabBar()
 }

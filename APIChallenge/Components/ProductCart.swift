@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductCart: View {
     
-    var category: Categories = .Beauty
+    var category: Category = .Beauty
     var name: String = "Product name with two or more lines goes here"
     var price: Double = 0.0
     

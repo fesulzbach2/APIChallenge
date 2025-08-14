@@ -11,7 +11,7 @@ struct TabBar: View {
     var body: some View {
         TabView {
             
-            Tab("Orders", systemImage: "bag.fill") {
+           Tab("Orders", systemImage: "bag.fill") {
                 NavigationStack {
                     Orders(viewModel: ProductViewModel(service: ProductService()))
                 }
@@ -19,7 +19,7 @@ struct TabBar: View {
             
             Tab("Favorites", systemImage: "heart.fill") {
                 NavigationStack {
-                    Favorites()
+                    Favorites(viewModel: ProductViewModel(service: ProductService()))
                 }
             }
             
@@ -27,6 +27,7 @@ struct TabBar: View {
             
             Tab("Home", systemImage: "house.fill") {
                 NavigationStack {
+                    HomeScreen()
                 }
             }
             

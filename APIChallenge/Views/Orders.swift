@@ -10,13 +10,15 @@ import SwiftUI
 
 struct Orders: View {
     
-    let viewModel: ProductViewModel
+    @State var viewModel: ProductViewModel
     
     var icon: String = "cart.badge.questionmark"
     var headerText: String = "Your cart is empty!"
     var footerText: String = "Add an item to your cart."
     
     @State var empty: Bool = false
+    
+    @State private var selectedProduct: Product?
     
     var body: some View {
         
@@ -36,16 +38,16 @@ struct Orders: View {
                         EmptyState(icon: "suitcase", headerText: "No orders yet!", footerText: "Buy an item and it will show up here.")
                     } else {
                         List(viewModel.products) { product in
-                            ProductOrder(product: product, category: .Beauty)
-                               .padding(.top, 16)
-                                .scrollContentBackground(.hidden)
-                                .listStyle(.plain)
+                            ProductOrder(product: product)
+                                .padding(.top, 16)
                                 .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
+                                .onTapGesture {
+                                    selectedProduct = product
+                                }
                         }
-                      //  .padding(.vertical)
-                        .listRowSeparator(.hidden)
+                        .scrollContentBackground(.hidden)
                         .listStyle(.plain)
-                        .listRowInsets(EdgeInsets())
                         .refreshable {
                             await viewModel.loadProducts()
                         }
@@ -64,6 +66,12 @@ struct Orders: View {
         }
         .toolbarBackground(.backgroundsPrimary, for: .tabBar)
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
+        
+        .sheet(item: $selectedProduct) { product in
+            if let index = viewModel.products.firstIndex(where: { $0.id == product.id }) {
+                Details(product: $viewModel.products[index])
+            }
+        }
         
         .task {
             await viewModel.loadProducts()
