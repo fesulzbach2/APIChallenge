@@ -9,31 +9,31 @@ import SwiftUI
 
 struct EmptyState: View {
     
-    var icon: String = "cart.fill"
-    var deliveryDate: String = "DELIVERY BY MONTH, 00"
-    var name: String = "Product name with two or more lines goes here"
-    var price: Double = 0.0
+    var icon: String = "cart.badge.questionmark"
+    var headerText: String = "Your cart is empty!"
+    var footerText: String = "Add an item to your cart."
     
     var body: some View {
         
-        HStack(spacing: 16) {
+        VStack(spacing: 8) {
             
             Image(systemName: icon)
-                .resizable()
-                .frame(width: 78, height: 78)
-                .frame(alignment: .leading)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .font(.system(size:48))
+                .frame(width: 65, height: 69)
+            
+            VStack(spacing: 16) {
+                Text(headerText)
+                    .fontWeight(.semibold)
+                    .font(.system(size: 17))
+                
+                Text(footerText)
+                    .fontWeight(.regular)
+                    .font(.system(size: 17))
+                    .foregroundStyle(.labelsSecondary)
+            }
+            
             
         }
-        .padding(.vertical, 8)
-        .padding(.leading, 8)
-        .padding(.trailing, 16)
-        .frame(maxWidth: .infinity)
-        .frame(height: 94)
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .foregroundStyle(.backgroundsSecondary)
-        )
         
     }
 }

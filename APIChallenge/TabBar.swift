@@ -10,6 +10,21 @@ import SwiftUI
 struct TabBar: View {
     var body: some View {
         TabView {
+            
+            Tab("Orders", systemImage: "bag.fill") {
+                NavigationStack {
+                    Orders(viewModel: ProductViewModel(service: ProductService()))
+                }
+            }
+            
+            Tab("Favorites", systemImage: "heart.fill") {
+                NavigationStack {
+                    Favorites()
+                }
+            }
+            
+            
+            
             Tab("Home", systemImage: "house.fill") {
                 NavigationStack {
                 }
@@ -25,15 +40,9 @@ struct TabBar: View {
                 }
             }
             
-            Tab("Favorites", systemImage: "heart.fill") {
-                NavigationStack {
-                }
-            }
             
-            Tab("Orders", systemImage: "bag.fill") {
-                NavigationStack {
-                }
-            }
+            
+            
         }
     }
 }

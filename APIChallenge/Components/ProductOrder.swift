@@ -9,20 +9,28 @@ import SwiftUI
 
 struct ProductOrder: View {
     
+    var product: Product
+    
     var category: Categories = .Beauty
     var deliveryDate: String = "DELIVERY BY MONTH, 00"
-    var name: String = "Product name with two or more lines goes here"
-    var price: Double = 0.0
     
     var body: some View {
         
         HStack(spacing: 16) {
             
-            category.image
-                .resizable()
-                .frame(width: 78, height: 78)
-                .frame(alignment: .leading)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+            AsyncImage(url: URL(string: product.thumbnail)) { image in
+                            image.resizable()
+                        } placeholder: {
+                            category.image
+                                .resizable()
+                                .frame(width: 78, height: 78)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .frame(alignment: .leading)
+                            
+                        }
+                        .frame(width: 78, height: 78)
+                        .frame(alignment: .leading)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
                 
             HStack(spacing: 16) {
                 VStack(alignment: .leading, spacing: 4) {
@@ -32,12 +40,12 @@ struct ProductOrder: View {
                         .font(.system(size: 12))
                         .foregroundStyle(.labelsSecondary)
                     
-                    Text(name)
+                    Text(product.title)
                         .fontWeight(.regular)
                         .font(.system(size: 13))
                     
                     
-                    Text("US$\(price.formatted(.number.precision(.fractionLength(2))))")
+                    Text("US$\(product.price.formatted(.number.precision(.fractionLength(2))))")
                     .fontWeight(.semibold)
                     .font(.system(size: 17))
                 }
@@ -59,6 +67,6 @@ struct ProductOrder: View {
     }
 }
 
-#Preview {
-    ProductOrder()
-}
+//#Preview {
+//    ProductOrder()
+//}

@@ -28,7 +28,7 @@ struct ProductFavorite: View {
                     Text(name)
                         .fontWeight(.regular)
                         .font(.system(size: 13))
-                        .frame(height: 36)
+                        .frame(height: 36, alignment: .top)
                     
                     
                     Text("US$\(price.formatted(.number.precision(.fractionLength(2))))")
