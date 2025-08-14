@@ -12,6 +12,7 @@ struct TabBar: View {
         TabView {
             Tab("Home", systemImage: "house.fill") {
                 NavigationStack {
+                    HomeScreen()
                 }
             }
             
