@@ -65,6 +65,7 @@ struct ProductCart: View {
                     Text(quantity.description)
                         .fontWeight(.regular)
                         .font(.system(size: 17))
+                        .frame(width: 25)
                       //  .frame(width: 16, height: 22, alignment: .center)
                     
                     Button {
