@@ -15,8 +15,8 @@ struct CategoryIcon: View {
         let spec = Fonts.specs(for: .subheadlineRegular)
         let twoLineMinHeight = spec.lineHeight * 2
         
-        Button {
-            action()
+        NavigationLink {
+            CategoryScreen(category: category)
         } label: {
             VStack(alignment: .center, spacing: 8) {
                 category.image

@@ -26,7 +26,7 @@ class ProductViewModel: ProductViewModelProtocol {
         do {
             product = try await service.fetchProduct(number: 2)
             products = try await service.fetchProducts()
-            print(products)
+//            print(products)
         } catch {
             errorMessage = "Error to fetch products: \(error.localizedDescription)"
         }
