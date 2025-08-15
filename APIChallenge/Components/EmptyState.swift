@@ -32,7 +32,6 @@ struct EmptyState: View {
                     .foregroundStyle(.labelsSecondary)
             }
             
-            
         }
         
     }

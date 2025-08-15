@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
-struct ProductResponse: Decodable {
+
+struct ProductResponse: Codable {
     var products: [Product]
 }
 
-struct Product: Identifiable, Decodable {
+struct Product: Identifiable, Codable {
     var id: Int
     var title: String
     var description: String
@@ -31,15 +33,6 @@ struct Product: Identifiable, Decodable {
             case category
             case shippingInformation
     }
-    
-//    func categoryImage() -> Image {
-//        
-//        if let categoryType = Category(rawValue: category) {
-//            
-//            return categoryType.image
-//        }
-//        return Category.Beauty.image
-//    }
     
 }
 

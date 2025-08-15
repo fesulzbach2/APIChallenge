@@ -7,11 +7,29 @@
 
 
 import SwiftUI
+import SwiftData
 
 struct Favorites: View {
     
-    let viewModel: ProductViewModel
+    @Environment(\.modelContext) var modelContext
     
+    @Query var favoritedProducts: [StoredProductID]
+    
+    @State var viewModel: ProductViewModel
+    
+    var filteredViewModel: [Product] {
+        
+        let favoriteIDs = Set(favoritedProducts.map { $0.id })
+        
+        for index in viewModel.products.indices {
+            if favoriteIDs.contains(viewModel.products[index].id) {
+                viewModel.products[index].isFavorite = true
+            }
+        }
+        
+        return viewModel.products.filter { $0.isFavorite}
+    }
+
     var icon: String = "cart.badge.questionmark"
     var headerText: String = "Your cart is empty!"
     var footerText: String = "Add an item to your cart."
@@ -23,11 +41,12 @@ struct Favorites: View {
         NavigationStack {
             VStack{
                 
-                if(empty) {
+                if(filteredViewModel.isEmpty) {
                     EmptyState(icon: "heart.slash", headerText: "No favorites yet!", footerText: "Favorite an item and it will show up here.")
                     
                 } else {
-                    List(viewModel.products) { product in
+                    
+                    List(filteredViewModel) { product in
                         ProductFavorite(product: product)
                            .padding(.top, 16)
                             .scrollContentBackground(.hidden)
@@ -56,8 +75,14 @@ struct Favorites: View {
         
         .task {
             await viewModel.loadProducts()
+            
         }
+
          
     }
         
+}
+
+#Preview {
+    TabBar()
 }

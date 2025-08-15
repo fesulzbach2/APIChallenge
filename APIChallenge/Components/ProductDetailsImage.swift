@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ProductDetailsImage: View {
+    
+    @Environment(\.modelContext) var modelContext
     
     @Binding var product: Product
     
@@ -28,6 +31,11 @@ struct ProductDetailsImage: View {
                         .overlay(
                             Button {
                                 product.isFavorite.toggle()
+                                
+                                let newStoredProduct = StoredProductID(id: product.id,
+                                                                        isFavorite: true)
+                                modelContext.insert(newStoredProduct)
+                                try? modelContext.save()
                         
                             } label: {
                                 Image(systemName: product.isFavorite ? "heart.fill" : "heart")

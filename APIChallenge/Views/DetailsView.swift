@@ -57,17 +57,17 @@ struct Details: View {
         
 }
 
-#Preview {
-    @State var previewProduct = Product(
-        id: 1,
-        title: "Example ProductExample",
-        description: "okkkk",
-        price: 99.9,
-        thumbnail: "https://via.placeholder.com/150",
-        category: "Beauty",
-        shippingInformation: "Delivery blabla"
-    )
-    
-    return Details(product: $previewProduct)
-}
+//#Preview {
+//    @State var previewProduct = Product(
+//        id: 1,
+//        title: "Example ProductExample",
+//        description: "okkkk",
+//        price: 99.9,
+//        thumbnail: "https://via.placeholder.com/150",
+//        category: "Beauty",
+//        shippingInformation: "Delivery blabla"
+//    )
+//    
+//    return Details(product: $previewProduct)
+//}
 

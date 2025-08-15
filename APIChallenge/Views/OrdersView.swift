@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct Orders: View {
+struct OrdersView: View {
     
     @State var viewModel: ProductViewModel
     
