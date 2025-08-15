@@ -13,5 +13,6 @@ struct APIChallengeApp: App {
         WindowGroup {
             TabBar()
         }
+        .modelContainer(for: StoredProductID.self)
     }
 }

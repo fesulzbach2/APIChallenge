@@ -9,29 +9,35 @@ import SwiftUI
 
 struct ProductFavorite: View {
     
-    var category: Category = .Beauty
-    var name: String = "Producte"
-    var price: Double = 0.5
+    var product: Product
     
     var body: some View {
         
         HStack(spacing: 16) {
             
-            category.image
-                .resizable()
-                .frame(width: 78, height: 78)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-                .frame(alignment: .leading)
+            AsyncImage(url: URL(string: product.thumbnail)) { image in
+                            image.resizable()
+                        } placeholder: {
+                            Image(.placeholder)
+                                .resizable()
+                                .frame(width: 78, height: 78)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .frame(alignment: .leading)
+                            
+                        }
+                        .frame(width: 78, height: 78)
+                        .frame(alignment: .leading)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
             
             HStack(spacing: 16) {
                 VStack(alignment: .leading) {
-                    Text(name)
+                    Text(product.title)
                         .fontWeight(.regular)
                         .font(.system(size: 13))
-                        .frame(height: 36)
+                        .frame(height: 36, alignment: .top)
                     
                     
-                    Text("US$\(price.formatted(.number.precision(.fractionLength(2))))")
+                    Text("US$\(product.price.formatted(.number.precision(.fractionLength(2))))")
                     .fontWeight(.semibold)
                     .font(.system(size: 17))
                 }
@@ -73,6 +79,6 @@ struct ProductFavorite: View {
     }
 }
 
-#Preview {
-    ProductFavorite()
-}
+//#Preview {
+//    ProductFavorite()
+//}
