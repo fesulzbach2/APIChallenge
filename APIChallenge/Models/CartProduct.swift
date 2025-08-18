@@ -18,13 +18,13 @@ import SwiftUI
 import SwiftData
 
 @Model
-final class StoredProductID {
+final class CartProduct {
     @Attribute(.unique) var id: Int
-    var isFavorite: Bool = false
+    var quantity: Int
 
-    init(id: Int, isFavorite: Bool) {
+    init(id: Int, quantity: Int) {
         self.id = id
-        self.isFavorite = isFavorite
+        self.quantity = 1
     }
     
 }
