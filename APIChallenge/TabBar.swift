@@ -11,20 +11,6 @@ struct TabBar: View {
     var body: some View {
         TabView {
             
-           Tab("Orders", systemImage: "bag.fill") {
-                NavigationStack {
-                    OrdersView(viewModel: ProductViewModel(service: ProductService()))
-                }
-            }
-            
-            Tab("Favorites", systemImage: "heart.fill") {
-                NavigationStack {
-                    Favorites(viewModel: ProductViewModel(service: ProductService()))
-                }
-            }
-            
-            
-            
             Tab("Home", systemImage: "house.fill") {
                 NavigationStack {
                     HomeScreen()
@@ -42,9 +28,17 @@ struct TabBar: View {
                 }
             }
             
+            Tab("Favorites", systemImage: "heart.fill") {
+                NavigationStack {
+                    Favorites(viewModel: ProductViewModel(service: ProductService()))
+                }
+            }
             
-            
-            
+           Tab("Orders", systemImage: "bag.fill") {
+                NavigationStack {
+                    OrdersView(viewModel: ProductViewModel(service: ProductService()))
+                }
+            }
         }
     }
 }

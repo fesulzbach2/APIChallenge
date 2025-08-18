@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class ProductViewModel: ProductViewModelProtocol {
+class ProductViewModel: ProductViewModelProtocol, ObservableObject {
     var product: Product?
     var products: [Product] = []
     var isLoading: Bool = false

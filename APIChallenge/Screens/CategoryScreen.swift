@@ -10,7 +10,7 @@ import SwiftUI
 struct CategoryScreen: View {
     var category: Category
     @State private var searchedProduct: String = ""
-    @State private var viewModel = ProductViewModel(service: ProductService())
+    @StateObject private var viewModel = ProductViewModel(service: ProductService())
     private let service = ProductService()
     
     var productsByCategory: [Product] {
@@ -25,11 +25,22 @@ struct CategoryScreen: View {
         }
     }
     
+    private func binding(for product: Product) -> Binding<Product> {
+        if let i = viewModel.products.firstIndex(where: { $0.id == product.id }) {
+            return Binding(
+                get: { viewModel.products[i] },
+                set: { viewModel.products[i] = $0 }
+            )
+        } else {
+            return .constant(product)
+        }
+    }
+    
     private let columns = [
         GridItem(.flexible(), spacing: 12),
         GridItem(.flexible(), spacing: 12)
     ]
-
+    
     var body: some View {
         VStack{
             NavigationStack {
@@ -39,23 +50,20 @@ struct CategoryScreen: View {
                             HStack{
                                 MediumCard(
                                     isHorizontal: false,
-                                    category: Category(rawValue: product.category) ?? .Beauty,
-                                    text: product.title,
-                                    price: product.price,
-                                    image: product.thumbnail,
+                                    product: binding(for: product)
                                 )
                                 
                             }
-
+                            
                         }
-
+                        
                         
                     }
                     .searchable(text: $searchedProduct, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search")
                 }
             }
             Divider()
-
+            
         }
         .navigationTitle(category.rawValue.capitalized)
         .navigationBarTitleDisplayMode(.inline)
