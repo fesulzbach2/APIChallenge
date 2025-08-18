@@ -32,7 +32,9 @@ struct HomeScreen: View {
                             .typography(.title1Emphasized)
                         
                         if let dealOfDay = viewModel.product {
-                            MediumCard(isHorizontal: true, category: Category(rawValue: dealOfDay.category) ?? .Beauty, text: dealOfDay.title, price: dealOfDay.price, image: dealOfDay.thumbnail)
+                            MediumCard(isHorizontal: true,
+                                       product: .constant(dealOfDay)
+                            )
                         }
                         
                         Text("Top picks")
@@ -43,10 +45,7 @@ struct HomeScreen: View {
                                 HStack{
                                     MediumCard(
                                         isHorizontal: false,
-                                        category: Category(rawValue: product.category) ?? .Beauty,
-                                        text: product.title,
-                                        price: product.price,
-                                        image: product.thumbnail,
+                                        product: .constant(product)
                                     )
                                 }
                             }

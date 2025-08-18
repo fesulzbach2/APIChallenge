@@ -11,9 +11,20 @@ struct TabBar: View {
     var body: some View {
         TabView {
             
-           Tab("Orders", systemImage: "bag.fill") {
+            Tab("Home", systemImage: "house.fill") {
                 NavigationStack {
-                    OrdersView(viewModel: ProductViewModel(service: ProductService()))
+                    HomeScreen()
+                }
+            }
+            
+            Tab("Categories", systemImage: "square.grid.2x2.fill") {
+                NavigationStack {
+                    CategoriesScreen()
+                }
+            }
+            
+            Tab("Cart", systemImage: "cart.fill") {
+                NavigationStack {
                 }
             }
             
@@ -23,27 +34,11 @@ struct TabBar: View {
                 }
             }
             
-            
-            
-            Tab("Home", systemImage: "house.fill") {
+           Tab("Orders", systemImage: "bag.fill") {
                 NavigationStack {
-                    HomeScreen()
+                    OrdersView(viewModel: ProductViewModel(service: ProductService()))
                 }
             }
-            
-            Tab("Categories", systemImage: "square.grid.2x2.fill") {
-                NavigationStack {
-                }
-            }
-            
-            Tab("Cart", systemImage: "cart.fill") {
-                NavigationStack {
-                }
-            }
-            
-            
-            
-            
         }
     }
 }
