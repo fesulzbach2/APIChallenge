@@ -19,8 +19,8 @@ struct CategoriesScreen: View {
     }
     
     func categoryList (category: Category) -> some View {
-        Button {
-            
+        NavigationLink {
+            CategoryScreen(category: category)
         } label: {
             HStack{
                 Text(category.rawValue)
@@ -56,12 +56,11 @@ struct CategoriesScreen: View {
                         .padding(.vertical, 19)
                     Divider()
                 }
-                
             }
             .navigationTitle("Categories")
             .navigationBarTitleDisplayMode(.large)
             .padding(.horizontal, 16)
-            .searchable(text: $searchedCategories, prompt: "Buscar categoria")
+            .searchable(text: $searchedCategories, prompt: "Seach")
             
         }
     }

@@ -5,17 +5,35 @@
 //  Created by Eduardo Pasqualotto Riboli on 04/08/25.
 //
 
-struct ProductResponse: Decodable {
+import SwiftUI
+import SwiftData
+
+
+struct ProductResponse: Codable {
     var products: [Product]
 }
 
-struct Product: Identifiable, Decodable {
+struct Product: Identifiable, Codable {
     var id: Int
     var title: String
+    var description: String
     var price: Double
     var thumbnail: String
     var category: String
-//    var isFavorite: Bool
+    var shippingInformation: String
+    
+    var isFavorite: Bool = false
+    
+    enum CodingKeys: String, CodingKey {
+            case id
+            case title
+            case description
+            case price
+            case thumbnail
+            case category
+            case shippingInformation
+    }
+    
 }
 
 struct Location: Decodable {
