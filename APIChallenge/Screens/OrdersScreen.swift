@@ -16,14 +16,21 @@ struct OrdersView: View {
     
     @Query var OrderedProducts: [OrderedProduct]
     
-    
-    var icon: String = "cart.badge.questionmark"
-    var headerText: String = "Your cart is empty!"
-    var footerText: String = "Add an item to your cart."
+    var filteredOrderedProducts: [OrderedProduct] {
+        if searchText.isEmpty {
+            return OrderedProducts
+        } else {
+            return OrderedProducts.filter {
+                $0.title.localizedCaseInsensitiveContains(searchText)
+            }
+        }
+    }
     
     @State var empty: Bool = false
     
     @State private var selectedProduct: Product?
+    
+    @State private var searchText = ""
     
     var body: some View {
         
@@ -31,11 +38,11 @@ struct OrdersView: View {
             
                 VStack{
                     
-                    if(empty) {
+                    if(filteredOrderedProducts.isEmpty) {
                         
                         EmptyState(icon: "suitcase", headerText: "No orders yet!", footerText: "Buy an item and it will show up here.")
                     } else {
-                        List(OrderedProducts) { product in
+                        List(filteredOrderedProducts) { product in
                             ProductOrder(product: product)
                                 .padding(.top, 16)
                                 .listRowInsets(EdgeInsets())
@@ -50,7 +57,7 @@ struct OrdersView: View {
                 .padding(.horizontal)
                 .scrollIndicators(.hidden)
                 .navigationTitle("Orders")
-                .searchable(text: .constant(""))
+                .searchable(text: $searchText)
                 
             
             

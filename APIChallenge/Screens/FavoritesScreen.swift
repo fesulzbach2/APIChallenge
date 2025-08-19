@@ -19,17 +19,27 @@ struct Favorites: View {
     
     @State var selectedProduct: Product? = nil
     
+    @State private var searchText = ""
+    
+    func updateFavorites() {
+        let favoriteIDs = Set(favoritedProducts.map { $0.id })
+        for index in viewModel.products.indices {
+            viewModel.products[index].isFavorite = favoriteIDs.contains(viewModel.products[index].id)
+        }
+    }
+    
     var filteredViewModel: [Product] {
         
-        let favoriteIDs = Set(favoritedProducts.map { $0.id })
-        
-        for index in viewModel.products.indices {
-            if favoriteIDs.contains(viewModel.products[index].id) {
-                viewModel.products[index].isFavorite = true
-            }
+        if searchText.isEmpty {
+            
+            return viewModel.products.filter { $0.isFavorite}
+        } else {
+            
+            return viewModel.products.filter { $0.isFavorite && $0.title.lowercased().contains(searchText.lowercased()) }
         }
         
-        return viewModel.products.filter { $0.isFavorite}
+        
+      //  return viewModel.products.filter { $0.isFavorite}
     }
     
     var body: some View {
@@ -60,6 +70,7 @@ struct Favorites: View {
                     .listRowInsets(EdgeInsets())
                     .refreshable {
                         await viewModel.loadProducts()
+                        updateFavorites()
                     }
                 }
                 
@@ -67,7 +78,7 @@ struct Favorites: View {
             .padding(.horizontal)
             .scrollIndicators(.hidden)
             .navigationTitle("Favorites")
-            .searchable(text: .constant(""))
+            .searchable(text: $searchText)
             
         }
         .toolbarBackground(.backgroundsPrimary, for: .tabBar)
@@ -81,8 +92,11 @@ struct Favorites: View {
         }
         
         .task {
-            await viewModel.loadProducts()
-            
+                await viewModel.loadProducts()
+                updateFavorites()
+            }
+        .onChange(of: favoritedProducts) { _ in
+            updateFavorites()
         }
 
          
