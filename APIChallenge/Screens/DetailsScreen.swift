@@ -7,8 +7,11 @@
 
 
 import SwiftUI
+import SwiftData
 
 struct Details: View {
+    
+    @Environment(\.modelContext) var modelContext
     
     @Binding var product: Product
     
@@ -47,6 +50,18 @@ struct Details: View {
                 
                 VStack {
                     Button {
+                        
+                        let newOrderedProduct = OrderedProduct(id: product.id,
+                                                               title: product.title,
+                                                               productDescription: product.description,
+                                                               price: product.price,
+                                                               thumbnail: product.thumbnail,
+                                                               category: product.category,
+                                                               shippingInformation: product.shippingInformation
+                                                               )
+                        modelContext.insert(newOrderedProduct)
+                        
+                        
                         
                     } label: {
                         Text("Add to Cart")

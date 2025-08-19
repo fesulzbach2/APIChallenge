@@ -7,10 +7,15 @@
 
 
 import SwiftUI
+import SwiftData
 
 struct OrdersView: View {
     
-    @State var viewModel: ProductViewModel
+    
+    @Environment(\.modelContext) var modelContext
+    
+    @Query var OrderedProducts: [OrderedProduct]
+    
     
     var icon: String = "cart.badge.questionmark"
     var headerText: String = "Your cart is empty!"
@@ -24,33 +29,21 @@ struct OrdersView: View {
         
         NavigationStack {
             
-            if viewModel.isLoading {
-                ProgressView()
-
-            } else if let error = viewModel.errorMessage {
-                Text(error)
-                    .foregroundStyle(.red)
-            } else {
                 VStack{
                     
                     if(empty) {
                         
                         EmptyState(icon: "suitcase", headerText: "No orders yet!", footerText: "Buy an item and it will show up here.")
                     } else {
-                        List(viewModel.products) { product in
+                        List(OrderedProducts) { product in
                             ProductOrder(product: product)
                                 .padding(.top, 16)
                                 .listRowInsets(EdgeInsets())
                                 .listRowSeparator(.hidden)
-                                .onTapGesture {
-                                    selectedProduct = product
-                                }
                         }
                         .scrollContentBackground(.hidden)
                         .listStyle(.plain)
-                        .refreshable {
-                            await viewModel.loadProducts()
-                        }
+
                     }
                     
                 }
@@ -59,24 +52,13 @@ struct OrdersView: View {
                 .navigationTitle("Orders")
                 .searchable(text: .constant(""))
                 
-            }
+            
             
             
             
         }
         .toolbarBackground(.backgroundsPrimary, for: .tabBar)
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
-        
-        .sheet(item: $selectedProduct) { product in
-            if let index = viewModel.products.firstIndex(where: { $0.id == product.id }) {
-                Details(product: $viewModel.products[index])
-                    .presentationDragIndicator(.visible)
-            }
-        }
-        
-        .task {
-            await viewModel.loadProducts()
-        }
 
          
     }

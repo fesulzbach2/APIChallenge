@@ -13,7 +13,6 @@ struct TabBar: View {
             
             Tab("Home", systemImage: "house.fill") {
                 NavigationStack {
-                    HomeScreen()
                 }
             }
             
@@ -36,7 +35,7 @@ struct TabBar: View {
             
            Tab("Orders", systemImage: "bag.fill") {
                 NavigationStack {
-                    OrdersView(viewModel: ProductViewModel(service: ProductService()))
+                    OrdersView()
                 }
             }
         }
