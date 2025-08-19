@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HomeScreen: View {
+struct HomeView: View {
     @State var isLoading: Bool = true
     @State var products: [Product] = []
     private let service = ProductService()

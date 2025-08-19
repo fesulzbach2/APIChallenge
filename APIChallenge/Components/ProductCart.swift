@@ -9,33 +9,54 @@ import SwiftUI
 
 struct ProductCart: View {
     
-    var category: Category = .Beauty
-    var name: String = "Product name with two or more lines goes here"
-    var price: Double = 0.0
+    var category: Category? {
+        Category(rawValue: product.category)
+    }
+    //    var price: Double = 0.0
+    var product: Product
     
     @State var quantity: Int = 1
     
     var body: some View {
         
         HStack(spacing: 16) {
-            
-            category.image
-                .resizable()
-                .frame(width: 78, height: 78)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-                .frame(alignment: .leading)
+            //            if let category {
+            //                category.image
+            //                    .resizable()
+            //                    .frame(width: 78, height: 78)
+            //                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            //                    .frame(alignment: .leading)
+            //            } else {
+            //
+            //            }
+            AsyncImage(url: URL(string: product.thumbnail)) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 78, height: 78)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            } placeholder: {
+                let category = Category(rawValue: product.category)
+                category?.image
+                    .resizable()
+                    .frame(width: 78, height: 78)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .frame(alignment: .leading)
+                
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 12))
             
             HStack(spacing: 16) {
                 VStack(alignment: .leading) {
-                    Text(name)
+                    Text(product.title)
                         .fontWeight(.regular)
                         .font(.system(size: 13))
                         .frame(height: 36)
                     
                     
-                    Text("US$\(price.formatted(.number.precision(.fractionLength(2))))")
-                    .fontWeight(.semibold)
-                    .font(.system(size: 17))
+                    Text("US$\(product.price.formatted(.number.precision(.fractionLength(2))))")
+                        .fontWeight(.semibold)
+                        .font(.system(size: 17))
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .frame(height: 62)
@@ -66,7 +87,7 @@ struct ProductCart: View {
                         .fontWeight(.regular)
                         .font(.system(size: 17))
                         .frame(width: 25)
-                      //  .frame(width: 16, height: 22, alignment: .center)
+                    //  .frame(width: 16, height: 22, alignment: .center)
                     
                     Button {
                         
@@ -100,10 +121,9 @@ struct ProductCart: View {
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(.backgroundsSecondary)
         )
-        
     }
 }
 
 #Preview {
-    ProductCart()
+    ProductCart(product: Product(id: 19, title: "teste", description: "aaa", price: 7.00, thumbnail: "a", category: Category.Beauty.rawValue, shippingInformation: "a"))
 }

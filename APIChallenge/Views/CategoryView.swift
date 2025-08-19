@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CategoryScreen: View {
+struct CategoryView: View {
     var category: Category
     @State private var searchedProduct: String = ""
     @StateObject private var viewModel = ProductViewModel(service: ProductService())

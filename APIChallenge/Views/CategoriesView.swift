@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CategoriesScreen: View {
+struct CategoriesView: View {
     @State private var searchedCategories: String = ""
     
     var filteredCategories: [Category] {
@@ -20,7 +20,7 @@ struct CategoriesScreen: View {
     
     func categoryList (category: Category) -> some View {
         NavigationLink {
-            CategoryScreen(category: category)
+            CategoryView(category: category)
         } label: {
             HStack{
                 Text(category.rawValue)

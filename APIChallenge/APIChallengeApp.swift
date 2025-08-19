@@ -13,6 +13,6 @@ struct APIChallengeApp: App {
         WindowGroup {
             TabBar()
         }
-        .modelContainer(for: StoredProductID.self)
+        .modelContainer(for: [Order.self, ProductToCart.self, StoredProductID.self])
     }
 }

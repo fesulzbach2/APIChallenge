@@ -13,18 +13,19 @@ struct TabBar: View {
             
             Tab("Home", systemImage: "house.fill") {
                 NavigationStack {
-                    HomeScreen()
+                    HomeView()
                 }
             }
             
             Tab("Categories", systemImage: "square.grid.2x2.fill") {
                 NavigationStack {
-                    CategoriesScreen()
+                    CategoriesView()
                 }
             }
             
             Tab("Cart", systemImage: "cart.fill") {
                 NavigationStack {
+                    CartView()
                 }
             }
             
