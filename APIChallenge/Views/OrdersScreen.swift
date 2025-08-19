@@ -7,76 +7,65 @@
 
 
 import SwiftUI
+import SwiftData
 
 struct OrdersView: View {
     
-    @State var viewModel: ProductViewModel
     
-    var icon: String = "cart.badge.questionmark"
-    var headerText: String = "Your cart is empty!"
-    var footerText: String = "Add an item to your cart."
+    @Environment(\.modelContext) var modelContext
+    
+    @Query var OrderedProducts: [OrderedProduct]
+    
+    var filteredOrderedProducts: [OrderedProduct] {
+        if searchText.isEmpty {
+            return OrderedProducts
+        } else {
+            return OrderedProducts.filter {
+                $0.title.localizedCaseInsensitiveContains(searchText)
+            }
+        }
+    }
     
     @State var empty: Bool = false
     
     @State private var selectedProduct: Product?
     
+    @State private var searchText = ""
+    
     var body: some View {
         
         NavigationStack {
             
-            if viewModel.isLoading {
-                ProgressView()
-
-            } else if let error = viewModel.errorMessage {
-                Text(error)
-                    .foregroundStyle(.red)
-            } else {
                 VStack{
                     
-                    if(empty) {
+                    if(filteredOrderedProducts.isEmpty) {
                         
                         EmptyState(icon: "suitcase", headerText: "No orders yet!", footerText: "Buy an item and it will show up here.")
                     } else {
-                        List(viewModel.products) { product in
+                        List(filteredOrderedProducts) { product in
                             ProductOrder(product: product)
                                 .padding(.top, 16)
                                 .listRowInsets(EdgeInsets())
                                 .listRowSeparator(.hidden)
-                                .onTapGesture {
-                                    selectedProduct = product
-                                }
                         }
                         .scrollContentBackground(.hidden)
                         .listStyle(.plain)
-                        .refreshable {
-                            await viewModel.loadProducts()
-                        }
+
                     }
                     
                 }
                 .padding(.horizontal)
                 .scrollIndicators(.hidden)
                 .navigationTitle("Orders")
-                .searchable(text: .constant(""))
+                .searchable(text: $searchText)
                 
-            }
+            
             
             
             
         }
         .toolbarBackground(.backgroundsPrimary, for: .tabBar)
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
-        
-        .sheet(item: $selectedProduct) { product in
-            if let index = viewModel.products.firstIndex(where: { $0.id == product.id }) {
-                Details(product: $viewModel.products[index])
-                    .presentationDragIndicator(.visible)
-            }
-        }
-        
-        .task {
-            await viewModel.loadProducts()
-        }
 
          
     }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductOrder: View {
     
-    var product: Product
+    var product: OrderedProduct
     
     var body: some View {
         

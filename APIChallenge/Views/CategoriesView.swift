@@ -60,7 +60,7 @@ struct CategoriesView: View {
             .navigationTitle("Categories")
             .navigationBarTitleDisplayMode(.large)
             .padding(.horizontal, 16)
-            .searchable(text: $searchedCategories, prompt: "Seach")
+            .searchable(text: $searchedCategories, prompt: "Search")
             
         }
     }
