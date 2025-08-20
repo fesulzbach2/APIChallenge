@@ -7,9 +7,11 @@
 import SwiftUI
 
 struct MediumCard: View {
+    
     var isHorizontal : Bool
     @Binding var product: Product
-    @State private var isFavorite = false
+    var action: () -> Void
+    
     @State private var showDetails = false
     
     func content() -> some View {
@@ -30,26 +32,24 @@ struct MediumCard: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     
-    func toggleFavorite(product: String) {
-        print("working")
-    }
     
     func image() -> some View {
         AsyncImage(url: URL(string: product.thumbnail)) { image in
             image
                 .resizable()
                 .scaledToFill()
-                .frame(width: 160, height: 160)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
         } placeholder: {
-            let category = Category(rawValue: product.category)
-            category?.image
+            Image(.placeholder)
                 .resizable()
-                .frame(width: 78, height: 78)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
                 .frame(alignment: .leading)
             
         }
+       // .frame(width: 160, height: 160)
+        .frame(height: 160)
+        .frame(maxWidth: .infinity)
+        
+        
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
     
@@ -71,7 +71,7 @@ struct MediumCard: View {
                                 
                                 Spacer()
                                 
-                                FavoriteIcon(fill: $isFavorite, action: {toggleFavorite(product: "product")})
+                                FavoriteIcon(product: $product, action: { action() })
                             }
                             
                             content()
@@ -85,7 +85,7 @@ struct MediumCard: View {
                             
                             image()
                             
-                            FavoriteIcon(fill: $isFavorite, action: {toggleFavorite(product: "product")})
+                            FavoriteIcon(product: $product, action: { action() })
                             
                         }
                         content()

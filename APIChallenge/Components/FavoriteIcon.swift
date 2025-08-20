@@ -8,19 +8,20 @@
 import SwiftUI
 
 struct FavoriteIcon: View {
-    @Binding var fill : Bool
+    
+    @Binding var product : Product
     var action: () -> Void
     
     var body: some View {
         Button {
-            fill.toggle()
             action()
+            product.isFavorite.toggle()
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)  .fill(Color.fillsTertiary)
                     .frame(width: 38, height: 38)
                 
-                Image(systemName: fill ? "heart.fill" : "heart")
+                Image(systemName: product.isFavorite ? "heart.fill" : "heart")
                     .foregroundStyle(.labelsPrimary)
                     .scaledToFit()
                 //                    .frame(width: 38, height: 38)

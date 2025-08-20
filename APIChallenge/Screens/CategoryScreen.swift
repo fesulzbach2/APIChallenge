@@ -50,7 +50,10 @@ struct CategoryScreen: View {
                             HStack{
                                 MediumCard(
                                     isHorizontal: false,
-                                    product: binding(for: product)
+                                    product: binding(for: product),
+                                    action: {
+                                        
+                                    }
                                 )
                                 
                             }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct APIChallengeApp: App {
@@ -13,6 +14,8 @@ struct APIChallengeApp: App {
         WindowGroup {
             TabBar()
         }
-        .modelContainer(for: [FavoritedProduct.self, OrderedProduct.self])
+        .modelContainer(
+            for: [FavoritedProduct.self, OrderedProduct.self])
+
     }
 }

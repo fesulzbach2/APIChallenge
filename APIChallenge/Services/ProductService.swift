@@ -44,4 +44,12 @@ class ProductService: ProductServiceProtocol {
         
         return response.products
     }
+    
+    func fetchProducts(for ids: [Int]) async throws -> [Product] {
+        var products: [Product] = []
+        for id in ids {
+            products.append(try await fetchProduct(number: id))
+        }
+        return products
+    }
 }

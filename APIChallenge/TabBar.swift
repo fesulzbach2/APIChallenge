@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct TabBar: View {
     var body: some View {
@@ -13,6 +14,7 @@ struct TabBar: View {
             
             Tab("Home", systemImage: "house.fill") {
                 NavigationStack {
+                    HomeScreen()
                 }
             }
             
@@ -29,7 +31,8 @@ struct TabBar: View {
             
             Tab("Favorites", systemImage: "heart.fill") {
                 NavigationStack {
-                    Favorites(viewModel: ProductViewModel(service: ProductService()))
+                    Favorites(viewModel: FavoritesViewModel(
+                        productService: ProductService(), favoriteService: FavoritesService()))
                 }
             }
             

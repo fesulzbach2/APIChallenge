@@ -30,29 +30,7 @@ struct ProductDetailsImage: View {
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                         .overlay(
                             Button {
-                                
-                                if product.isFavorite {
-                                    
-                                    let fetchDescriptor = FetchDescriptor<FavoritedProduct> (
-                                               predicate: #Predicate { $0.id == product.id }
-                                           )
-                                    
-                                    if let stored = try? modelContext.fetch(fetchDescriptor).first {
-                                                modelContext.delete(stored)
-                                                try? modelContext.save()
-                                            }
-                                    
-                                } else {
-                                    
-                                    let newStoredProduct = FavoritedProduct(id: product.id,
-                                                                            isFavorite: true)
-                                    modelContext.insert(newStoredProduct)
-                                    try? modelContext.save()
-                                }
-                                
-                                product.isFavorite.toggle()
-                                
-                                
+                                favoriteProduct()
                         
                             } label: {
                                 Image(systemName: product.isFavorite ? "heart.fill" : "heart")
@@ -72,6 +50,30 @@ struct ProductDetailsImage: View {
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(.backgroundsSecondary)
         )
+        
+    }
+    
+    func favoriteProduct() -> Void {
+        
+        if product.isFavorite {
+            
+            let fetchDescriptor = FetchDescriptor<FavoritedProduct> (
+                       predicate: #Predicate { $0.id == product.id }
+                   )
+            
+            if let stored = try? modelContext.fetch(fetchDescriptor).first {
+                        modelContext.delete(stored)
+                        try? modelContext.save()
+                    }
+            
+        } else {
+            
+            let newStoredProduct = FavoritedProduct(id: product.id)
+            modelContext.insert(newStoredProduct)
+            try? modelContext.save()
+        }
+        
+        product.isFavorite.toggle()
         
     }
 }
