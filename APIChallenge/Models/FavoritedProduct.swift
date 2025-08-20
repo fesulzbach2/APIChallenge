@@ -26,5 +26,4 @@ final class FavoritedProduct {
         self.id = id
         self.isFavorite = isFavorite
     }
-    
 }

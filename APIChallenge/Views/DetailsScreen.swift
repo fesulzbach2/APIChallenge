@@ -11,11 +11,14 @@ import SwiftData
 
 struct Details: View {
     
-    @Environment(\.modelContext) var modelContext
+    @Environment(\.modelContext) private var context
     
     @Binding var product: Product
-    
     @State var empty: Bool = false
+//    @Query var orders: [Order]
+    @State private var products: [Product] = []
+    let service = ProductService()
+    let cartService = CartService()
     
     var body: some View {
         
@@ -51,17 +54,26 @@ struct Details: View {
                 VStack {
                     Button {
                         
-                        let newOrderedProduct = OrderedProduct(id: product.id,
-                                                               title: product.title,
-                                                               productDescription: product.description,
-                                                               price: product.price,
-                                                               thumbnail: product.thumbnail,
-                                                               category: product.category,
-                                                               shippingInformation: product.shippingInformation
-                                                               )
-                        modelContext.insert(newOrderedProduct)
+//                        let newOrderedProduct = OrderedProduct(id: product.id,
+//                                                               title: product.title,
+//                                                               productDescription: product.description,
+//                                                               price: product.price,
+//                                                               thumbnail: product.thumbnail,
+//                                                               category: product.category,
+//                                                               shippingInformation: product.shippingInformation
+//                                                               )
+//                        modelContext.insert(newOrderedProduct)
+//                        if let order = orders.first {
+//                            let save = CartProductID(productId: product.id, quantity: 1)
+//                            order.products.append(save)
+//                        } else {
+//                            let save = CartProductID(productId: product.id, quantity: 1)
+//                            let newOrder = Order(products: [save])
+//                            context.insert(newOrder)
+//                        }
                         
-                        
+                        let cartProductID = CartProductID(productId: product.id, quantity: 1)
+                        cartService.addCartProductId(cartProductID)
                         
                     } label: {
                         Text("Add to Cart")
@@ -90,17 +102,17 @@ struct Details: View {
         
 }
 
-#Preview {
-    @State var previewProduct = Product(
-        id: 1,
-        title: "Example ProductExample",
-        description: "okkkk",
-        price: 99.9,
-        thumbnail: "https://via.placeholder.com/150",
-        category: "Beauty",
-        shippingInformation: "Delivery blabla"
-    )
-    
-    return Details(product: $previewProduct)
-}
+//#Preview {
+//    @State var previewProduct = Product(
+//        id: 1,
+//        title: "Example ProductExample",
+//        description: "okkkk",
+//        price: 99.9,
+//        thumbnail: "https://via.placeholder.com/150",
+//        category: "Beauty",
+//        shippingInformation: "Delivery blabla"
+//    )
+//    
+//    return Details(product: $previewProduct)
+//}
 

@@ -34,9 +34,22 @@
 		751116A32E4D1B35002E91A7 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8B69469C2E56406000CEFB3C /* Exceptions for "APIChallenge" folder in "APIChallenge" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Models/Untitled.swift,
+			);
+			target = 751116782E4D1B24002E91A7 /* APIChallenge */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7511167B2E4D1B24002E91A7 /* APIChallenge */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8B69469C2E56406000CEFB3C /* Exceptions for "APIChallenge" folder in "APIChallenge" target */,
+			);
 			path = APIChallenge;
 			sourceTree = "<group>";
 		};

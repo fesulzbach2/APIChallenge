@@ -17,6 +17,11 @@ struct ProductCart: View {
     
     @State var quantity: Int = 1
     
+    
+    var increaseQuantity: ()->Void
+    var decreaseQuantity: ()->Void
+    
+    
     var body: some View {
         
         HStack(spacing: 16) {
@@ -66,7 +71,7 @@ struct ProductCart: View {
                     Button {
                         
                         if quantity > 0 {
-                            quantity = quantity - 1
+                            decreaseQuantity()
                         }
                         
                     } label: {
@@ -91,7 +96,7 @@ struct ProductCart: View {
                     
                     Button {
                         
-                        quantity = quantity + 1
+                        increaseQuantity()
                         
                     } label: {
                         

@@ -10,13 +10,11 @@ import SwiftUI
 import SwiftData
 
 @Model
-final class ProductToCart {
-    @Attribute(.unique) var id: UUID
+final class CartProductID {
     var productId: Int
     var quantity: Int
 
-    init(id: UUID = UUID(), productId: Int, quantity: Int) {
-        self.id = id
+    init(productId: Int, quantity: Int) {
         self.productId = productId
         self.quantity = quantity
     }
