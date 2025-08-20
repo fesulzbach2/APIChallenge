@@ -17,6 +17,8 @@ struct ProductCart: View {
     
     @State var quantity: Int = 1
     
+//    var cartViewModel: CartViewModel = CartViewModel(cartService: CartService(), productService: ProductService())
+//
     
     var increaseQuantity: ()->Void
     var decreaseQuantity: ()->Void
@@ -71,6 +73,7 @@ struct ProductCart: View {
                     Button {
                         
                         if quantity > 0 {
+                            quantity -= 1
                             decreaseQuantity()
                         }
                         
@@ -95,7 +98,9 @@ struct ProductCart: View {
                     //  .frame(width: 16, height: 22, alignment: .center)
                     
                     Button {
-                        
+                        quantity += 1
+//                        let cartProductAux = CartProduct(id: product.id, product: product, quantity: quantity)
+//                        cartViewModel.increaseQuantity(for: cartProductAux)
                         increaseQuantity()
                         
                     } label: {
@@ -129,6 +134,6 @@ struct ProductCart: View {
     }
 }
 
-#Preview {
-    ProductCart(product: Product(id: 19, title: "teste", description: "aaa", price: 7.00, thumbnail: "a", category: Category.Beauty.rawValue, shippingInformation: "a"))
-}
+//#Preview {
+//    ProductCart(product: Product(id: 19, title: "teste", description: "aaa", price: 7.00, thumbnail: "a", category: Category.Beauty.rawValue, shippingInformation: "a"))
+//}

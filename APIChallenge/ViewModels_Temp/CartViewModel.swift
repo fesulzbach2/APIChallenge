@@ -54,6 +54,9 @@ class CartViewModel {
         var totalPrice = 0.0
         
         for cartProduct in cartProducts {
+            print(cartProduct.product)
+            print(cartProduct.quantity)
+            print(cartProduct.product.price)
             totalPrice += Double(cartProduct.quantity) * cartProduct.product.price
         }
         
@@ -61,11 +64,35 @@ class CartViewModel {
     }
     
     func increaseQuantity(for cartProduct: CartProduct) {
-        // servico avisando que é para aumentar a quantidade desse item
+        do {
+            if let item = try cartService.getCartProductIds().first(where: { $0.productId == cartProduct.id }) {
+                //no banco
+                try cartService.updateCartProductId(item, quantity: item.quantity + 1)
+                
+                //na aplicacao
+                if let index = cartProducts.firstIndex(where: { $0.id == cartProduct.id }) {
+                    cartProducts[index].quantity += 1
+                }
+            }
+        } catch {
+            
+        }
     }
     
     func decreaseQuantity(for cartProduct: CartProduct) {
-        // servico avisando que é para diminuir a quantidade desse item
+        do {
+            if let item = try cartService.getCartProductIds().first(where: { $0.productId == cartProduct.id }) {
+                //no banco
+                try cartService.updateCartProductId(item, quantity: item.quantity - 1)
+                
+                //na aplicacao
+                if let index = cartProducts.firstIndex(where: { $0.id == cartProduct.id }) {
+                    cartProducts[index].quantity -= 1
+                }
+            }
+        } catch {
+            
+        }
     }
     
     

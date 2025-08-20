@@ -28,7 +28,6 @@ final class CartProduct: Identifiable {
         self.product = product
         self.quantity = 1
     }
-    
 }
 
 

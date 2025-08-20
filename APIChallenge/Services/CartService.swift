@@ -10,11 +10,14 @@ import SwiftData
 
 protocol CartServiceProtocol {
     func getCartProductIds() throws -> [CartProductID]
+    func addCartProductId(_ cartProductID: CartProductID) throws -> Void
+    
+    func updateCartProductId(_ cartProductID: CartProductID, quantity: Int) throws
+//    func removeCartProductId(_ cartProductID: CartProductID) throws
 }
 
 
 class CartService: CartServiceProtocol {
-    
     private let modelContainer: ModelContainer
     private let modelContext: ModelContext
     
@@ -33,9 +36,17 @@ class CartService: CartServiceProtocol {
         }
     }
     
-    func addCartProductId(_ cartProductID: CartProductID) {
+    func addCartProductId(_ cartProductID: CartProductID) throws -> Void {
         modelContext.insert(cartProductID)
     }
     
+    func updateCartProductId(_ cartProductID: CartProductID, quantity: Int) throws {
+        cartProductID.quantity = quantity
+         try modelContext.save()
+    }
     
+//    func removeCartProductId(_ cartProductID: CartProductID) throws {
+//        cartProductID.delete = quantity
+//         try modelContext.save()
+//    }
 }

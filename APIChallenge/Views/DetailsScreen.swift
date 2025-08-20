@@ -14,14 +14,11 @@ struct Details: View {
     @Environment(\.modelContext) private var context
     
     @Binding var product: Product
-    @State var empty: Bool = false
-//    @Query var orders: [Order]
-    @State private var products: [Product] = []
-    let service = ProductService()
-    let cartService = CartService()
+    var cartViewModel: CartViewModel = CartViewModel(cartService: CartService(), productService: ProductService())
+    
+    var viewModel: ProductViewModel = ProductViewModel(service: ProductService())
     
     var body: some View {
-        
         NavigationStack {
             VStack {
                 ScrollView {
@@ -37,8 +34,8 @@ struct Details: View {
                                 .font(.system(size: 20))
                             
                             Text("US$\(product.price.formatted(.number.precision(.fractionLength(2))))")
-                            .fontWeight(.bold)
-                            .font(.system(size: 22))
+                                .fontWeight(.bold)
+                                .font(.system(size: 22))
                         }
                         
                         Text(product.description)
@@ -54,26 +51,31 @@ struct Details: View {
                 VStack {
                     Button {
                         
-//                        let newOrderedProduct = OrderedProduct(id: product.id,
-//                                                               title: product.title,
-//                                                               productDescription: product.description,
-//                                                               price: product.price,
-//                                                               thumbnail: product.thumbnail,
-//                                                               category: product.category,
-//                                                               shippingInformation: product.shippingInformation
-//                                                               )
-//                        modelContext.insert(newOrderedProduct)
-//                        if let order = orders.first {
-//                            let save = CartProductID(productId: product.id, quantity: 1)
-//                            order.products.append(save)
-//                        } else {
-//                            let save = CartProductID(productId: product.id, quantity: 1)
-//                            let newOrder = Order(products: [save])
-//                            context.insert(newOrder)
-//                        }
+                        //                        let newOrderedProduct = OrderedProduct(id: product.id,
+                        //                                                               title: product.title,
+                        //                                                               productDescription: product.description,
+                        //                                                               price: product.price,
+                        //                                                               thumbnail: product.thumbnail,
+                        //                                                               category: product.category,
+                        //                                                               shippingInformation: product.shippingInformation
+                        //                                                               )
+                        //                        modelContext.insert(newOrderedProduct)
+                        //                        if let order = orders.first {
+                        //                            let save = CartProductID(productId: product.id, quantity: 1)
+                        //                            order.products.append(save)
+                        //                        } else {
+                        //                            let save = CartProductID(productId: product.id, quantity: 1)
+                        //                            let newOrder = Order(products: [save])
+                        //                            context.insert(newOrder)
+                        //                        }
                         
                         let cartProductID = CartProductID(productId: product.id, quantity: 1)
-                        cartService.addCartProductId(cartProductID)
+                        do {
+                            context.insert(cartProductID)
+                            try? context.save()
+                        } catch {
+                            print("Erro ao adicionar no carrinho: \(error.localizedDescription)")
+                        }
                         
                     } label: {
                         Text("Add to Cart")
@@ -87,7 +89,7 @@ struct Details: View {
                     }
                 }
                 .padding(.top)
-               // .frame(height: 86)
+                // .frame(height: 86)
             }
             .padding(.horizontal)
             
@@ -95,11 +97,11 @@ struct Details: View {
             .navigationTitle("Details")
             .toolbarBackground(.backgroundsSecondary, for: .navigationBar)
             .toolbarBackgroundVisibility(.visible, for: .navigationBar)
-            
+//            .task {
+////                await cartViewModel.getCartProducts()
+//            }
         }
-         
     }
-        
 }
 
 //#Preview {
@@ -112,7 +114,7 @@ struct Details: View {
 //        category: "Beauty",
 //        shippingInformation: "Delivery blabla"
 //    )
-//    
+//
 //    return Details(product: $previewProduct)
 //}
 

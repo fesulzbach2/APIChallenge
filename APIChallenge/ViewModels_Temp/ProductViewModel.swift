@@ -24,7 +24,7 @@ class ProductViewModel: ProductViewModelProtocol, ObservableObject {
         isLoading = true
         
         do {
-            product = try await service.fetchProduct(number: 2)
+//            product = try await service.fetchProduct(number: 2)
             products = try await service.fetchProducts()
 //            print(products)
         } catch {
@@ -33,4 +33,16 @@ class ProductViewModel: ProductViewModelProtocol, ObservableObject {
         
         isLoading = false
     }
+    
+    func loadProduct(id: Int) async {
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            product = try await service.fetchProduct(number: id)
+        } catch {
+            errorMessage = "Error to fetch product: \(error.localizedDescription)"
+        }
+    }
+
 }

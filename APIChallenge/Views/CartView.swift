@@ -22,7 +22,8 @@ struct CartView: View {
                         ProductCart(product: cartProduct.product,
                                     quantity: cartProduct.quantity,
                                     increaseQuantity: {viewModel.increaseQuantity(for: cartProduct)},
-                                    decreaseQuantity: {viewModel.decreaseQuantity(for: cartProduct)})
+                                    decreaseQuantity: {viewModel.decreaseQuantity(for: cartProduct)}
+                        )
                     }
                 }
                 .padding(.horizontal, 16)
