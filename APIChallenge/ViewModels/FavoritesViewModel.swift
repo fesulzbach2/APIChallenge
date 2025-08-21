@@ -60,9 +60,9 @@ class FavoritesViewModel: ObservableObject {
     var filteredFavorites: [Product] {
         
         if searchText.isEmpty {
-            return products.filter { $0.isFavorite }
+            return products
         } else {
-            return products.filter { $0.isFavorite && $0.title.lowercased().contains(searchText.lowercased()) }
+            return products.filter { $0.title.lowercased().contains(searchText.lowercased()) }
         }
     }
 }

@@ -28,6 +28,7 @@ struct ProductDetailsImage: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 12))
                                 .frame(alignment: .leading)
                         }
+                        .scaledToFit()
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                         .overlay(

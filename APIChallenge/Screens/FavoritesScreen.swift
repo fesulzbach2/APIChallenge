@@ -23,7 +23,7 @@ struct Favorites: View {
                     
                 } else {
                     
-                    List(viewModel.products) { product in
+                    List(viewModel.filteredFavorites) { product in
                         ProductFavorite(product: product)
                            .padding(.top, 16)
                             .scrollContentBackground(.hidden)

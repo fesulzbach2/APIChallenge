@@ -19,7 +19,7 @@ struct MediumCard: View {
         let twoLineMinHeight = spec.lineHeight * 2
         
         return VStack(alignment: .leading){
-            Text(product.description)
+            Text(product.title)
                 .typography(.subheadlineRegular)
                 .foregroundStyle(.labelsPrimary)
                 .lineLimit(2)
