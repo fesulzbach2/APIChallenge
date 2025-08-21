@@ -98,7 +98,7 @@ struct MediumCard: View {
         .background(.backgroundsSecondary)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .sheet(isPresented: $showDetails) {
-                    Details(product: $product)
+            Details(viewModel: DetailsViewModel(productService: ProductService(), favoriteService: FavoritesService()), product: $product)
                 }
     }
 }

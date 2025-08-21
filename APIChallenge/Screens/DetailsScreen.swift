@@ -11,11 +11,10 @@ import SwiftData
 
 struct Details: View {
     
-    @Environment(\.modelContext) var modelContext
+   // @Environment(\.modelContext) var modelContext
+    @State var viewModel: DetailsViewModel
     
     @Binding var product: Product
-    
-    @State var empty: Bool = false
     
     var body: some View {
         
@@ -24,7 +23,9 @@ struct Details: View {
                 ScrollView {
                     
                     VStack (alignment: .leading, spacing: 16) {
-                        ProductDetailsImage(product: $product)
+                        ProductDetailsImage(product: $product, action: {
+                            viewModel.toggleFavorite(product: product)
+                        })
                             .frame(maxHeight: 360)
                             .padding(.top)
                         
@@ -50,16 +51,6 @@ struct Details: View {
                 
                 VStack {
                     Button {
-                        
-                        let newOrderedProduct = OrderedProduct(id: product.id,
-                                                               title: product.title,
-                                                               productDescription: product.description,
-                                                               price: product.price,
-                                                               thumbnail: product.thumbnail,
-                                                               category: product.category,
-                                                               shippingInformation: product.shippingInformation
-                                                               )
-                        modelContext.insert(newOrderedProduct)
                         
                         
                         
@@ -90,17 +81,17 @@ struct Details: View {
         
 }
 
-#Preview {
-    @State var previewProduct = Product(
-        id: 1,
-        title: "Example ProductExample",
-        description: "okkkk",
-        price: 99.9,
-        thumbnail: "https://via.placeholder.com/150",
-        category: "Beauty",
-        shippingInformation: "Delivery blabla"
-    )
-    
-    return Details(product: $previewProduct)
-}
+//#Preview {
+//    @State var previewProduct = Product(
+//        id: 1,
+//        title: "Example ProductExample",
+//        description: "okkkk",
+//        price: 99.9,
+//        thumbnail: "https://via.placeholder.com/150",
+//        category: "Beauty",
+//        shippingInformation: "Delivery blabla"
+//    )
+//    
+//    return Details(product: $previewProduct)
+//}
 

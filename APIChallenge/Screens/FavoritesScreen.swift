@@ -11,10 +11,6 @@ import SwiftData
 
 struct Favorites: View {
     
-  //  @Environment(\.modelContext) var modelContext
-    
-   // @Query var favoritedProducts: [FavoritedProduct]
-    
     @State var viewModel: FavoritesViewModel
     
     var body: some View {
@@ -57,9 +53,10 @@ struct Favorites: View {
         .toolbarBackground(.backgroundsPrimary, for: .tabBar)
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
         
+        
         .sheet(item: $viewModel.selectedProduct) { product in
             if let index = viewModel.products.firstIndex(where: { $0.id == product.id }) {
-                Details(product: $viewModel.products[index])
+                Details(viewModel: DetailsViewModel(productService: ProductService(), favoriteService: FavoritesService()), product: $viewModel.products[index])
                     .presentationDragIndicator(.visible)
             }
         }

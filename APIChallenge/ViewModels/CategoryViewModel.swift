@@ -10,14 +10,15 @@ import Foundation
 import SwiftData
 
 @Observable
-class HomeViewModel: ObservableObject {
+class CategoryViewModel: ObservableObject {
     
     var products: [Product] = []
+    var productsByCategory: [Product] = []
     var favoritedProducts: [FavoritedProduct] = []
     
     var isLoading: Bool = true
     var errorMessage: String? = nil
-    
+    var searchText: String = ""
     
     private let productService: ProductServiceProtocol
     private let favoriteService: FavoritesServiceProtocol
@@ -27,13 +28,18 @@ class HomeViewModel: ObservableObject {
         self.favoriteService = favoriteService
     }
     
-    func loadProducts() async {
+    func filterProductsByCategory(category: Category) {
+        productsByCategory = products.filter{ $0.category.lowercased() == category.rawValue.lowercased() }
+    }
+    
+    func loadProducts(category: Category) async {
         isLoading = true
         
         do {
             loadFavoritedProducts()
             products = try await productService.fetchProducts()
             updateFavorites()
+            filterProductsByCategory(category: category)
         } catch {
             errorMessage = "Error to fetch products: \(error.localizedDescription)"
         }
@@ -68,12 +74,13 @@ class HomeViewModel: ObservableObject {
     }
     
     
-//    var filteredFavorites: [Product] {
-//        
-//        if searchText.isEmpty {
-//            return products.filter { $0.isFavorite }
-//        } else {
-//            return products.filter { $0.isFavorite && $0.title.lowercased().contains(searchText.lowercased()) }
-//        }
-//    }
+    
+    var filteredProducts: [Product] {
+        searchText.isEmpty
+        ? productsByCategory
+        : productsByCategory.filter{ product in
+            product.title.lowercased().contains(searchText.lowercased())
+        }
+    }
+    
 }

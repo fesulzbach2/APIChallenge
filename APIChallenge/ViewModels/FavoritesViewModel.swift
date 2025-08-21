@@ -24,7 +24,6 @@ class FavoritesViewModel: ObservableObject {
     
     var favoritedProductsIDs: [FavoritedProduct] = []
     
-    
     init(productService: ProductServiceProtocol, favoriteService: FavoritesServiceProtocol) {
         self.productService = productService
         self.favoriteService = favoriteService
@@ -37,7 +36,13 @@ class FavoritesViewModel: ObservableObject {
             let favoritedProductsIDs: [FavoritedProduct] = try favoriteService.fetchFavoritedProductsIDs()
             let ids = favoritedProductsIDs.map { $0.id }
             
-            products = try await productService.fetchProducts(for: ids)
+            let fetchedProducts = try await productService.fetchProducts(for: ids)
+            
+            products = fetchedProducts.map { product in
+                        var mutableProduct = product
+                        mutableProduct.isFavorite = true
+                        return mutableProduct
+                    }
             
         } catch {
             errorMessage = "Error to fetch products: \(error.localizedDescription)"
@@ -46,6 +51,10 @@ class FavoritesViewModel: ObservableObject {
         
         isLoading = false
         
+    }
+    
+    func getProductID(_ id: Int) async -> Product {
+        try! await productService.fetchProduct(number: id)
     }
         
     var filteredFavorites: [Product] {

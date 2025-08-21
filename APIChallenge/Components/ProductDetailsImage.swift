@@ -10,9 +10,11 @@ import SwiftData
 
 struct ProductDetailsImage: View {
     
-    @Environment(\.modelContext) var modelContext
+   // @Environment(\.modelContext) var modelContext
     
     @Binding var product: Product
+    
+    var action: () -> Void
     
     var body: some View {
         
@@ -30,7 +32,9 @@ struct ProductDetailsImage: View {
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                         .overlay(
                             Button {
-                                favoriteProduct()
+                                
+                                action()
+                                product.isFavorite.toggle()
                         
                             } label: {
                                 Image(systemName: product.isFavorite ? "heart.fill" : "heart")
@@ -53,7 +57,7 @@ struct ProductDetailsImage: View {
         
     }
     
-    func favoriteProduct() -> Void {
+   /* func favoriteProduct() -> Void {
         
         if product.isFavorite {
             
@@ -75,7 +79,7 @@ struct ProductDetailsImage: View {
         
         product.isFavorite.toggle()
         
-    }
+    }*/
 }
 
 //#Preview {
