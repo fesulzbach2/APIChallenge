@@ -29,28 +29,13 @@ struct CartView: View {
                 .padding(.horizontal, 16)
             }
 
-            
-//            Button("Adicionar pedido de teste"){
-//                let product1 = ProductToCart(productId: 14, quantity: 4)
-//                let product2 = ProductToCart(productId: 19, quantity: 2)
-//                let order = Order(products: [product1, product2])
-//                
-//                context.insert(order)
-//                try? context.save()
-//            }
-//            
-//            Button("Limpar produtos") {
-//                for order in orders {
-//                    context.delete(order)
-//                }
-//                try? context.save()
-//            }
-            
             HStack {
                 Text("Total:")
                 Spacer()
-                Text("\(viewModel.totalPrice)")
+                Text("US$\(String(format: "%.2f", viewModel.totalPrice))")
+                    .typography(.headline)
             }
+            .padding(.horizontal, 16)
         }
         .navigationTitle("Cart")
         .navigationBarTitleDisplayMode(.large)
