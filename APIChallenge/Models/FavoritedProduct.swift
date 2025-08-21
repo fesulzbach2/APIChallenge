@@ -20,13 +20,8 @@ import SwiftData
 @Model
 final class FavoritedProduct {
     @Attribute(.unique) var id: Int
-    var isFavorite: Bool = false
 
-    init(id: Int, isFavorite: Bool) {
+    init(id: Int) {
         self.id = id
-        self.isFavorite = isFavorite
     }
-    
 }
-
-

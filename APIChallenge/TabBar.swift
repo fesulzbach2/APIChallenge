@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct TabBar: View {
     var body: some View {
@@ -13,30 +14,32 @@ struct TabBar: View {
             
             Tab("Home", systemImage: "house.fill") {
                 NavigationStack {
-                    HomeScreen()
+                    HomeView()
                 }
             }
             
             Tab("Categories", systemImage: "square.grid.2x2.fill") {
                 NavigationStack {
-                    CategoriesScreen()
+                    CategoriesView()
                 }
             }
             
             Tab("Cart", systemImage: "cart.fill") {
                 NavigationStack {
+                    CartView(viewModel: CartViewModel(cartService: CartService(), productService: ProductService()))
                 }
             }
             
             Tab("Favorites", systemImage: "heart.fill") {
                 NavigationStack {
-                    Favorites(viewModel: ProductViewModel(service: ProductService()))
+                    Favorites(viewModel: FavoritesViewModel(
+                        productService: ProductService(), favoriteService: FavoritesService()))
                 }
             }
             
            Tab("Orders", systemImage: "bag.fill") {
                 NavigationStack {
-                    OrdersView(viewModel: ProductViewModel(service: ProductService()))
+                    OrdersView()
                 }
             }
         }

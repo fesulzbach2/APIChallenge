@@ -7,11 +7,13 @@
 
 import SwiftUI
 
-struct HomeScreen: View {
-    @State var isLoading: Bool = true
-    @State var products: [Product] = []
-    private let service = ProductService()
-    @State private var viewModel = ProductViewModel(service: ProductService())
+struct HomeView: View {
+  //  @State var isLoading: Bool = true
+   // @State var products: [Product] = []
+  //  private let service = ProductService()
+    
+    
+    @State private var viewModel = HomeViewModel(productService: ProductService(), favoriteService: FavoritesService())
     
     private let columns = [
         GridItem(.flexible(), spacing: 12),
@@ -31,9 +33,12 @@ struct HomeScreen: View {
                         Text("Deals of the day")
                             .typography(.title1Emphasized)
                         
-                        if let dealOfDay = viewModel.product {
+                        if let dealOfDay = viewModel.products.first {
                             MediumCard(isHorizontal: true,
-                                       product: .constant(dealOfDay)
+                                       product: .constant(dealOfDay),
+                                       action: {
+                                            viewModel.toggleFavorite(product: dealOfDay)
+                                        }
                             )
                         }
                         
@@ -41,13 +46,17 @@ struct HomeScreen: View {
                             .typography(.title1Emphasized)
                         
                         LazyVGrid(columns: columns, spacing: 16) {
-                            ForEach(viewModel.products, id: \.id) { product in
+                            ForEach($viewModel.products, id: \.id) { $product in
                                 HStack{
                                     MediumCard(
                                         isHorizontal: false,
-                                        product: .constant(product)
+                                        product: $product,
+                                        action: {
+                                            viewModel.toggleFavorite(product: product)
+                                        }
                                     )
                                 }
+
                             }
                         }
                     }
@@ -61,8 +70,6 @@ struct HomeScreen: View {
         .padding(.horizontal, 16)
         .task {
             await viewModel.loadProducts()
-            let single = try? await service.fetchProduct(number: 2)
-            viewModel.product = single
         }
     }
 }

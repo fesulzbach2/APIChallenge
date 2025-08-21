@@ -11,38 +11,23 @@ import SwiftData
 
 struct Favorites: View {
     
-    @Environment(\.modelContext) var modelContext
+  //  @Environment(\.modelContext) var modelContext
     
-    @Query var favoritedProducts: [FavoritedProduct]
+   // @Query var favoritedProducts: [FavoritedProduct]
     
-    @State var viewModel: ProductViewModel
-    
-    @State var selectedProduct: Product? = nil
-    
-    var filteredViewModel: [Product] {
-        
-        let favoriteIDs = Set(favoritedProducts.map { $0.id })
-        
-        for index in viewModel.products.indices {
-            if favoriteIDs.contains(viewModel.products[index].id) {
-                viewModel.products[index].isFavorite = true
-            }
-        }
-        
-        return viewModel.products.filter { $0.isFavorite}
-    }
+    @State var viewModel: FavoritesViewModel
     
     var body: some View {
         
         NavigationStack {
             VStack{
                 
-                if(filteredViewModel.isEmpty) {
+                if(viewModel.products.isEmpty) {
                     EmptyState(icon: "heart.slash", headerText: "No favorites yet!", footerText: "Favorite an item and it will show up here.")
                     
                 } else {
                     
-                    List(filteredViewModel) { product in
+                    List(viewModel.products) { product in
                         ProductFavorite(product: product)
                            .padding(.top, 16)
                             .scrollContentBackground(.hidden)
@@ -50,16 +35,15 @@ struct Favorites: View {
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.hidden)
                             .onTapGesture {
-                                selectedProduct = product
+                                viewModel.selectedProduct = product
                             }
                     }
-                   // .allowsHitTesting(false)
-                  //  .padding(.vertical)
                     .listRowSeparator(.hidden)
                     .listStyle(.plain)
                     .listRowInsets(EdgeInsets())
                     .refreshable {
                         await viewModel.loadProducts()
+                    //    viewModel.updateFavorites(favoritedProducts: favoritedProducts)
                     }
                 }
                 
@@ -67,13 +51,13 @@ struct Favorites: View {
             .padding(.horizontal)
             .scrollIndicators(.hidden)
             .navigationTitle("Favorites")
-            .searchable(text: .constant(""))
+            .searchable(text: $viewModel.searchText)
             
         }
         .toolbarBackground(.backgroundsPrimary, for: .tabBar)
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
         
-        .sheet(item: $selectedProduct) { product in
+        .sheet(item: $viewModel.selectedProduct) { product in
             if let index = viewModel.products.firstIndex(where: { $0.id == product.id }) {
                 Details(product: $viewModel.products[index])
                     .presentationDragIndicator(.visible)
@@ -81,9 +65,14 @@ struct Favorites: View {
         }
         
         .task {
-            await viewModel.loadProducts()
             
+            await viewModel.loadProducts()
+           // viewModel.updateFavorites(favoritedProducts: favoritedProducts)
         }
+        
+//        .onChange(of: favoritedProducts) { _ in
+//           viewModel.updateFavorites(favoritedProducts: favoritedProducts)
+//        }
 
          
     }

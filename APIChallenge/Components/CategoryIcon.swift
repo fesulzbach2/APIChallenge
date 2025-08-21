@@ -16,7 +16,7 @@ struct CategoryIcon: View {
         let twoLineMinHeight = spec.lineHeight * 2
         
         NavigationLink {
-            CategoryScreen(category: category)
+            CategoryView(category: category)
         } label: {
             VStack(alignment: .center, spacing: 8) {
                 category.image

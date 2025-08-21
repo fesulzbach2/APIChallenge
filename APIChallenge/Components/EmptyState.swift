@@ -20,6 +20,7 @@ struct EmptyState: View {
             Image(systemName: icon)
                 .font(.system(size:48))
                 .frame(width: 65, height: 69)
+                .foregroundStyle(.gray2)
             
             VStack(spacing: 16) {
                 Text(headerText)

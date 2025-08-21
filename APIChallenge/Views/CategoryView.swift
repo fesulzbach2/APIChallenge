@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CategoryScreen: View {
+struct CategoryView: View {
     var category: Category
     @State private var searchedProduct: String = ""
     @StateObject private var viewModel = ProductViewModel(service: ProductService())
@@ -50,7 +50,10 @@ struct CategoryScreen: View {
                             HStack{
                                 MediumCard(
                                     isHorizontal: false,
-                                    product: binding(for: product)
+                                    product: binding(for: product),
+                                    action: {
+                                        
+                                    }
                                 )
                                 
                             }
