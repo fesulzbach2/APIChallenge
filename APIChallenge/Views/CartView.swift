@@ -14,8 +14,10 @@ struct CartView: View {
     
     var body: some View {
         VStack {
+            Spacer()
             if viewModel.cartProducts.isEmpty {
                 EmptyState(icon: "cart.badge.questionmark", headerText: "Your cart is empty!", footerText: "Add an item to your cart.")
+                Spacer()
             } else {
                 ScrollView {
                     ForEach(viewModel.cartProducts) { cartProduct in
@@ -28,6 +30,8 @@ struct CartView: View {
                 }
                 .padding(.horizontal, 16)
             }
+            
+            Spacer()
 
             HStack {
                 Text("Total:")
@@ -36,13 +40,29 @@ struct CartView: View {
                     .typography(.headline)
             }
             .padding(.horizontal, 16)
+            
+            Button {
+                print("clicado")
+            } label: {
+                ZStack {
+                    Rectangle()
+                        .foregroundStyle(.fillsTertiary)
+                        .frame(height: 54)
+                        .frame(width: 361)
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                    
+                    Text("Checkout")
+                        .foregroundStyle(.labelsPrimary)
+                        .typography(.bodyEmphasized)
+                }
+            }
         }
         .navigationTitle("Cart")
         .navigationBarTitleDisplayMode(.large)
         .task {
             await viewModel.getCartProducts()
         }
-        .padding(.top, 16)
+        .padding(.vertical, 16)
     }
 }
 
