@@ -9,13 +9,13 @@ import SwiftUI
 
 struct ProductOrder: View {
     
-    var product: OrderedProduct
+    var orderedProduct: OrderedProduct
     
     var body: some View {
         
         HStack(spacing: 16) {
             
-            AsyncImage(url: URL(string: product.thumbnail)) { image in
+            AsyncImage(url: URL(string: orderedProduct.product.thumbnail)) { image in
                             image.resizable()
                         } placeholder: {
                             Image(.placeholder)
@@ -32,17 +32,17 @@ struct ProductOrder: View {
             HStack(spacing: 16) {
                 VStack(alignment: .leading, spacing: 4) {
                     
-                    Text(product.shippingInformation.uppercased())
+                    Text(orderedProduct.product.shippingInformation.uppercased())
                         .fontWeight(.regular)
                         .font(.system(size: 12))
                         .foregroundStyle(.labelsSecondary)
                     
-                    Text(product.title)
+                    Text(orderedProduct.product.title)
                         .fontWeight(.regular)
                         .font(.system(size: 13))
                     
                     
-                    Text("US$\(product.price.formatted(.number.precision(.fractionLength(2))))")
+                    Text("US$\(orderedProduct.product.price.formatted(.number.precision(.fractionLength(2))))")
                     .fontWeight(.semibold)
                     .font(.system(size: 17))
                 }

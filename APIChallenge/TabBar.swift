@@ -39,7 +39,7 @@ struct TabBar: View {
             
            Tab("Orders", systemImage: "bag.fill") {
                 NavigationStack {
-                    OrdersView()
+                    OrdersView(viewModel: OrderViewModel(orderService: OrderService(), productService: ProductService()))
                 }
             }
         }

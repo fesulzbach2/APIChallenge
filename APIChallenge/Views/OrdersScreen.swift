@@ -12,23 +12,7 @@ import SwiftData
 struct OrdersView: View {
     
     
-    @Environment(\.modelContext) var modelContext
-    
-    @Query var OrderedProducts: [OrderedProduct]
-    
-    var filteredOrderedProducts: [OrderedProduct] {
-        if searchText.isEmpty {
-            return OrderedProducts
-        } else {
-            return OrderedProducts.filter {
-                $0.title.localizedCaseInsensitiveContains(searchText)
-            }
-        }
-    }
-    
-    @State var empty: Bool = false
-    
-    @State private var selectedProduct: Product?
+    var viewModel: OrderViewModel
     
     @State private var searchText = ""
     
@@ -38,12 +22,12 @@ struct OrdersView: View {
             
                 VStack{
                     
-                    if(filteredOrderedProducts.isEmpty) {
+                    if(viewModel.orderedProducts.isEmpty) {
                         
                         EmptyState(icon: "suitcase", headerText: "No orders yet!", footerText: "Buy an item and it will show up here.")
                     } else {
-                        List(filteredOrderedProducts) { product in
-                            ProductOrder(product: product)
+                        ForEach(viewModel.orderedProducts) {product in
+                            ProductOrder(orderedProduct: product)
                                 .padding(.top, 16)
                                 .listRowInsets(EdgeInsets())
                                 .listRowSeparator(.hidden)
