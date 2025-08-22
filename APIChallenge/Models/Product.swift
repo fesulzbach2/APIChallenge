@@ -16,7 +16,7 @@ struct ProductResponse: Codable {
 struct Product: Identifiable, Codable {
     var id: Int
     var title: String
-    var description: String
+    var details: String
     var price: Double
     var thumbnail: String
     var category: String
@@ -27,7 +27,7 @@ struct Product: Identifiable, Codable {
     enum CodingKeys: String, CodingKey {
             case id
             case title
-            case description
+            case details = "description"
             case price
             case thumbnail
             case category

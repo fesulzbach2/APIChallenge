@@ -11,12 +11,10 @@ import SwiftData
 
 struct Details: View {
     
-    @Environment(\.modelContext) private var context
+//    @Environment(\.modelContext) private var context
     
     @Binding var product: Product
-    var cartViewModel: CartViewModel = CartViewModel(cartService: CartService(), productService: ProductService())
-    
-    var viewModel: ProductViewModel = ProductViewModel(service: ProductService())
+    var cartViewModel: CartViewModel = CartViewModel(cartService: CartService(), productService: ProductService(), orderService: OrderService())
     
     var body: some View {
         NavigationStack {
@@ -38,7 +36,7 @@ struct Details: View {
                                 .font(.system(size: 22))
                         }
                         
-                        Text(product.description)
+                        Text(product.details)
                             .fontWeight(.regular)
                             .font(.system(size: 17))
                             .foregroundStyle(.labelsSecondary)
@@ -50,32 +48,7 @@ struct Details: View {
                 
                 VStack {
                     Button {
-                        
-                        //                        let newOrderedProduct = OrderedProduct(id: product.id,
-                        //                                                               title: product.title,
-                        //                                                               productDescription: product.description,
-                        //                                                               price: product.price,
-                        //                                                               thumbnail: product.thumbnail,
-                        //                                                               category: product.category,
-                        //                                                               shippingInformation: product.shippingInformation
-                        //                                                               )
-                        //                        modelContext.insert(newOrderedProduct)
-                        //                        if let order = orders.first {
-                        //                            let save = CartProductID(productId: product.id, quantity: 1)
-                        //                            order.products.append(save)
-                        //                        } else {
-                        //                            let save = CartProductID(productId: product.id, quantity: 1)
-                        //                            let newOrder = Order(products: [save])
-                        //                            context.insert(newOrder)
-                        //                        }
-                        
-                        let cartProductID = CartProductID(productId: product.id, quantity: 1)
-                        do {
-                            context.insert(cartProductID)
-                            try? context.save()
-                        } catch {
-                            print("Erro ao adicionar no carrinho: \(error.localizedDescription)")
-                        }
+                        cartViewModel.addProductInCart(product: CartProduct(id: product.id, product: product, quantity: 1))
                         
                     } label: {
                         Text("Add to Cart")

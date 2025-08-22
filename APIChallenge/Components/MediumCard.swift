@@ -19,7 +19,7 @@ struct MediumCard: View {
         let twoLineMinHeight = spec.lineHeight * 2
         
         return VStack(alignment: .leading){
-            Text(product.description)
+            Text(product.details)
                 .typography(.subheadlineRegular)
                 .foregroundStyle(.labelsPrimary)
                 .lineLimit(2)
@@ -98,7 +98,7 @@ struct MediumCard: View {
         .background(.backgroundsSecondary)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .sheet(isPresented: $showDetails) {
-                    Details(product: $product)
+            Details(product: $product)
                 }
     }
 }

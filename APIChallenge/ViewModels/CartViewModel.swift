@@ -18,10 +18,12 @@ class CartViewModel {
     
     private let cartService: any CartServiceProtocol
     private let productService: any ProductServiceProtocol
+    private let orderService: any OrderServiceProtocol
     
-    init(cartService: any CartServiceProtocol, productService: ProductServiceProtocol) {
+    init(cartService: any CartServiceProtocol, productService: ProductServiceProtocol, orderService: OrderServiceProtocol) {
         self.cartService = cartService
         self.productService = productService
+        self.orderService = orderService
     }
     
     func getCartProducts() async {
@@ -95,5 +97,22 @@ class CartViewModel {
         }
     }
     
+    func checkout() {
+        do {
+            
+            try orderService.addProductOrder(products: cartProducts)
+
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func addProductInCart(product: CartProduct) {
+        do {
+            try cartService.addCartProductId(CartProductID(productId: product.id, quantity: product.quantity))
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
     
 }

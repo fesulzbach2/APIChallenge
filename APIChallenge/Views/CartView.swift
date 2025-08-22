@@ -12,6 +12,8 @@ struct CartView: View {
     
     var viewModel: CartViewModel
     
+//    @Environment(\.modelContext) private var context
+    
     var body: some View {
         VStack {
             Spacer()
@@ -32,7 +34,7 @@ struct CartView: View {
             }
             
             Spacer()
-
+            
             HStack {
                 Text("Total:")
                 Spacer()
@@ -42,7 +44,7 @@ struct CartView: View {
             .padding(.horizontal, 16)
             
             Button {
-                print("clicado")
+                viewModel.checkout()
             } label: {
                 ZStack {
                     Rectangle()

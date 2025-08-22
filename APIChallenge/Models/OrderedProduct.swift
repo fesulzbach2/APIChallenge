@@ -12,9 +12,11 @@ import SwiftData
 final class OrderedProduct: Identifiable {
     var productId: Int
     var product: Product
+    var quantity: Int
 
-    init(productId: Int, product: Product) {
+    init(productId: Int, product: Product, quantity: Int) {
         self.productId = productId
         self.product = product
+        self.quantity = quantity
     }
 }
