@@ -14,8 +14,6 @@ struct APIChallengeApp: App {
         WindowGroup {
             TabBar()
         }
-        .modelContainer(
-            for: [FavoritedProduct.self, OrderedProduct.self])
 
     }
 }
