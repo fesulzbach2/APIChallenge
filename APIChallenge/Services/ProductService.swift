@@ -46,13 +46,20 @@ class ProductService: ProductServiceProtocol {
     }
     
     func fetchProducts(for ids: [Int]) async throws -> [Product] {
-        var products:  [Product] = []
-        
-        for id in ids {
-            let product = try await fetchProduct(number: id)
-            products.append(product)
+        try await withThrowingTaskGroup(of: Product.self) { group in
+            
+            for id in ids {
+                group.addTask {
+                    try await self.fetchProduct(number: id)
+                }
+            }
+            
+            var products: [Product] = []
+            for try await product in group {
+                products.append(product)
+            }
+            
+            return products
         }
-        
-        return products
     }
 }
