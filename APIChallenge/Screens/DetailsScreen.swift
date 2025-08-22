@@ -11,18 +11,21 @@ import SwiftData
 
 struct Details: View {
     
-//    @Environment(\.modelContext) private var context
+   // @Environment(\.modelContext) var modelContext
+    @State var viewModel: DetailsViewModel
     
     @Binding var product: Product
-    var cartViewModel: CartViewModel = CartViewModel(cartService: CartService(), productService: ProductService(), orderService: OrderService())
     
     var body: some View {
+        
         NavigationStack {
             VStack {
                 ScrollView {
                     
                     VStack (alignment: .leading, spacing: 16) {
-                        ProductDetailsImage(product: $product)
+                        ProductDetailsImage(product: $product, action: {
+                            viewModel.toggleFavorite(product: product)
+                        })
                             .frame(maxHeight: 360)
                             .padding(.top)
                         
@@ -32,8 +35,8 @@ struct Details: View {
                                 .font(.system(size: 20))
                             
                             Text("US$\(product.price.formatted(.number.precision(.fractionLength(2))))")
-                                .fontWeight(.bold)
-                                .font(.system(size: 22))
+                            .fontWeight(.bold)
+                            .font(.system(size: 22))
                         }
                         
                         Text(product.details)
@@ -48,7 +51,8 @@ struct Details: View {
                 
                 VStack {
                     Button {
-                        cartViewModel.addProductInCart(product: CartProduct(id: product.id, product: product, quantity: 1))
+                        
+                        
                         
                     } label: {
                         Text("Add to Cart")
@@ -62,7 +66,7 @@ struct Details: View {
                     }
                 }
                 .padding(.top)
-                // .frame(height: 86)
+               // .frame(height: 86)
             }
             .padding(.horizontal)
             
@@ -70,11 +74,11 @@ struct Details: View {
             .navigationTitle("Details")
             .toolbarBackground(.backgroundsSecondary, for: .navigationBar)
             .toolbarBackgroundVisibility(.visible, for: .navigationBar)
-//            .task {
-////                await cartViewModel.getCartProducts()
-//            }
+            
         }
+         
     }
+        
 }
 
 //#Preview {
@@ -87,7 +91,7 @@ struct Details: View {
 //        category: "Beauty",
 //        shippingInformation: "Delivery blabla"
 //    )
-//
+//    
 //    return Details(product: $previewProduct)
 //}
 

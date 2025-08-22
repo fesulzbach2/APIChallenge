@@ -7,12 +7,11 @@
 
 import SwiftUI
 
-struct HomeView: View {
-  //  @State var isLoading: Bool = true
-   // @State var products: [Product] = []
-  //  private let service = ProductService()
-    
-    
+struct HomeScreen: View {
+    //  @State var isLoading: Bool = true
+    // @State var products: [Product] = []
+    //  private let service = ProductService()
+        
     @State private var viewModel = HomeViewModel(productService: ProductService(), favoriteService: FavoritesService())
     
     private let columns = [
@@ -33,12 +32,12 @@ struct HomeView: View {
                         Text("Deals of the day")
                             .typography(.title1Emphasized)
                         
-                        if let dealOfDay = viewModel.products.first {
+                        if let dealOfDay = viewModel.products.firstIndex(where: {_ in true}) {
                             MediumCard(isHorizontal: true,
-                                       product: .constant(dealOfDay),
+                                       product: $viewModel.products[dealOfDay],
                                        action: {
-                                            viewModel.toggleFavorite(product: dealOfDay)
-                                        }
+                                viewModel.toggleFavorite(product: viewModel.products[dealOfDay])
+                            }
                             )
                         }
                         

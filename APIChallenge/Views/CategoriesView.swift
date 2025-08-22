@@ -7,20 +7,14 @@
 
 import SwiftUI
 
-struct CategoriesView: View {
-    @State private var searchedCategories: String = ""
+struct CategoriesScreen: View {
+
     
-    var filteredCategories: [Category] {
-        searchedCategories.isEmpty
-            ? Category.allCases
-            : Category.allCases.filter {
-            $0.rawValue.localizedCaseInsensitiveContains(searchedCategories)
-        }
-    }
+    @State var viewModel: CategoriesViewModel
     
     func categoryList (category: Category) -> some View {
         NavigationLink {
-            CategoryView(category: category)
+            CategoryScreen(category: category, viewModel: CategoryViewModel(productService: ProductService(), favoriteService: FavoritesService()))
         } label: {
             HStack{
                 Text(category.rawValue)
@@ -51,7 +45,7 @@ struct CategoriesView: View {
                 }
                 .padding(.top, 16)
                 
-                ForEach(filteredCategories, id: \.self) { category in
+                ForEach(viewModel.filteredCategories, id: \.self) { category in
                     categoryList(category: category)
                         .padding(.vertical, 19)
                     Divider()
@@ -60,7 +54,7 @@ struct CategoriesView: View {
             .navigationTitle("Categories")
             .navigationBarTitleDisplayMode(.large)
             .padding(.horizontal, 16)
-            .searchable(text: $searchedCategories, prompt: "Search")
+            .searchable(text: $viewModel.searchText, prompt: "Search")
             
         }
     }

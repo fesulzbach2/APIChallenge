@@ -7,23 +7,11 @@
 
 import SwiftUI
 
-struct CategoryView: View {
+struct CategoryScreen: View {
+
     var category: Category
-    @State private var searchedProduct: String = ""
-    @StateObject private var viewModel = ProductViewModel(service: ProductService())
-    private let service = ProductService()
     
-    var productsByCategory: [Product] {
-        return viewModel.products.filter{ $0.category.lowercased() == category.rawValue.lowercased() }
-    }
-    
-    var filteredProducts: [Product] {
-        searchedProduct.isEmpty
-        ? productsByCategory
-        : productsByCategory.filter{ product in
-            product.title.lowercased().contains(searchedProduct.lowercased())
-        }
-    }
+    @State var viewModel: CategoryViewModel
     
     private func binding(for product: Product) -> Binding<Product> {
         if let i = viewModel.products.firstIndex(where: { $0.id == product.id }) {
@@ -46,7 +34,7 @@ struct CategoryView: View {
             NavigationStack {
                 ScrollView{
                     LazyVGrid(columns: columns, spacing: 16) {
-                        ForEach(filteredProducts, id: \.id) { product in
+                        ForEach(viewModel.filteredProducts) { product in
                             HStack{
                                 MediumCard(
                                     isHorizontal: false,
@@ -62,7 +50,7 @@ struct CategoryView: View {
                         
                         
                     }
-                    .searchable(text: $searchedProduct, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search")
+                    .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search")
                 }
             }
             Divider()
@@ -72,7 +60,7 @@ struct CategoryView: View {
         .navigationBarTitleDisplayMode(.inline)
         .padding(.horizontal, 16)
         .task {
-            await viewModel.loadProducts()
+            await viewModel.loadProducts(category: category)
         }
     }
 }
