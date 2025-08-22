@@ -11,8 +11,7 @@ struct HomeScreen: View {
     //  @State var isLoading: Bool = true
     // @State var products: [Product] = []
     //  private let service = ProductService()
-    
-    
+        
     @State private var viewModel = HomeViewModel(productService: ProductService(), favoriteService: FavoritesService())
     
     private let columns = [
@@ -56,7 +55,7 @@ struct HomeScreen: View {
                                         }
                                     )
                                 }
-                                
+
                             }
                         }
                     }

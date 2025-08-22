@@ -33,9 +33,9 @@ struct ProductDetailsImage: View {
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                         .overlay(
                             Button {
-                                
                                 action()
                                 product.isFavorite.toggle()
+
                         
                             } label: {
                                 Image(systemName: product.isFavorite ? "heart.fill" : "heart")
@@ -58,29 +58,8 @@ struct ProductDetailsImage: View {
         
     }
     
-   /* func favoriteProduct() -> Void {
-        
-        if product.isFavorite {
-            
-            let fetchDescriptor = FetchDescriptor<FavoritedProduct> (
-                       predicate: #Predicate { $0.id == product.id }
-                   )
-            
-            if let stored = try? modelContext.fetch(fetchDescriptor).first {
-                        modelContext.delete(stored)
-                        try? modelContext.save()
-                    }
-            
-        } else {
-            
-            let newStoredProduct = FavoritedProduct(id: product.id)
-            modelContext.insert(newStoredProduct)
-            try? modelContext.save()
-        }
-        
-        product.isFavorite.toggle()
-        
-    }*/
+
+
 }
 
 //#Preview {

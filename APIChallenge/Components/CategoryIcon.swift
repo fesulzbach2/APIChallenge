@@ -17,6 +17,7 @@ struct CategoryIcon: View {
         
         NavigationLink {
             CategoryScreen(category: category, viewModel: CategoryViewModel(productService: ProductService(), favoriteService: FavoritesService()))
+
         } label: {
             VStack(alignment: .center, spacing: 8) {
                 category.image

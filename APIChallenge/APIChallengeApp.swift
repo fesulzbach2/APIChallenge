@@ -16,6 +16,5 @@ struct APIChallengeApp: App {
         }
         .modelContainer(
             for: [FavoritedProduct.self, OrderedProduct.self])
-
     }
 }

@@ -26,6 +26,7 @@ struct TabBar: View {
             
             Tab("Cart", systemImage: "cart.fill") {
                 NavigationStack {
+                    CartView(viewModel: CartViewModel(cartService: CartService(), productService: ProductService()))
                 }
             }
             

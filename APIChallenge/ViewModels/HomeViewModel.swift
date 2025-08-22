@@ -67,7 +67,6 @@ class HomeViewModel: ObservableObject {
         }
     }
     
-    
 //    var filteredFavorites: [Product] {
 //        
 //        if searchText.isEmpty {

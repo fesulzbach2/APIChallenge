@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CategoriesScreen: View {
+
     
     @State var viewModel: CategoriesViewModel
     

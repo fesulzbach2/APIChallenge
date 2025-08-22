@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftData
 
 struct Favorites: View {
-    
+
     @State var viewModel: FavoritesViewModel
     
     var body: some View {
@@ -24,6 +24,7 @@ struct Favorites: View {
                 } else {
                     
                     List(viewModel.filteredFavorites) { product in
+
                         ProductFavorite(product: product)
                            .padding(.top, 16)
                             .scrollContentBackground(.hidden)
@@ -53,13 +54,16 @@ struct Favorites: View {
         .toolbarBackground(.backgroundsPrimary, for: .tabBar)
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
         
-        
-        .sheet(item: $viewModel.selectedProduct) { product in
-            if let index = viewModel.products.firstIndex(where: { $0.id == product.id }) {
-                Details(viewModel: DetailsViewModel(productService: ProductService(), favoriteService: FavoritesService()), product: $viewModel.products[index])
-                    .presentationDragIndicator(.visible)
+        .sheet(item: $viewModel.selectedProduct, onDismiss: {
+            Task {
+                await viewModel.loadProducts()
             }
-        }
+        }, content: { product in
+                if let index = viewModel.products.firstIndex(where: { $0.id == product.id }) {
+                    Details(viewModel: DetailsViewModel(productService: ProductService(), favoriteService: FavoritesService()), product: $viewModel.products[index])
+                        .presentationDragIndicator(.visible)
+                }
+        })
         
         .task {
             

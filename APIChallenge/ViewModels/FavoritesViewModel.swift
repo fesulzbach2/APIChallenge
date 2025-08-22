@@ -24,6 +24,7 @@ class FavoritesViewModel: ObservableObject {
     
     var favoritedProductsIDs: [FavoritedProduct] = []
     
+
     init(productService: ProductServiceProtocol, favoriteService: FavoritesServiceProtocol) {
         self.productService = productService
         self.favoriteService = favoriteService
@@ -35,7 +36,6 @@ class FavoritesViewModel: ObservableObject {
         do {
             let favoritedProductsIDs: [FavoritedProduct] = try favoriteService.fetchFavoritedProductsIDs()
             let ids = favoritedProductsIDs.map { $0.id }
-            
             let fetchedProducts = try await productService.fetchProducts(for: ids)
             
             products = fetchedProducts.map { product in

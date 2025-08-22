@@ -24,7 +24,4 @@ final class FavoritedProduct {
     init(id: Int) {
         self.id = id
     }
-    
 }
-
-
