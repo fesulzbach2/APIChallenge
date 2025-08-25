@@ -26,6 +26,7 @@ struct TabBar: View {
             
             Tab("Cart", systemImage: "cart.fill") {
                 NavigationStack {
+                    CartScreen(viewModel: CartViewModel(cartService: CartService(), productService: ProductService()))
                 }
             }
             
@@ -38,7 +39,7 @@ struct TabBar: View {
             
            Tab("Orders", systemImage: "bag.fill") {
                 NavigationStack {
-                    OrdersView()
+//                    OrdersView()
                 }
             }
         }

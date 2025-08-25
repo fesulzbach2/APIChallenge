@@ -40,7 +40,7 @@ struct CategoryScreen: View {
                                     isHorizontal: false,
                                     product: binding(for: product),
                                     action: {
-                                        
+                                        viewModel.toggleFavorite(product: product)
                                     }
                                 )
                                 

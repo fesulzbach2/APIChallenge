@@ -14,7 +14,6 @@ protocol FavoritesServiceProtocol {
     func removeFavoritedProduct(id: Int)
 }
 
-@Observable
 class FavoritesService: FavoritesServiceProtocol {
         
     private let modelContext: ModelContext

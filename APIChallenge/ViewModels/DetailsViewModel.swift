@@ -19,10 +19,12 @@ class DetailsViewModel: ObservableObject {
     
     private let productService: ProductServiceProtocol
     private let favoriteService: FavoritesServiceProtocol
+    private let cartService: CartServiceProtocol
     
-    init(productService: ProductServiceProtocol, favoriteService: FavoritesServiceProtocol) {
+    init(productService: ProductServiceProtocol, favoriteService: FavoritesServiceProtocol, cartService: CartServiceProtocol) {
         self.productService = productService
         self.favoriteService = favoriteService
+        self.cartService = cartService
     }
     
     func toggleFavorite(product: Product)  {
@@ -31,6 +33,14 @@ class DetailsViewModel: ObservableObject {
         } else {
             favoriteService.addFavoritedProduct(id: product.id)
             
+        }
+    }
+    
+    func addToCart(_ id: Int) {
+        do {
+            try cartService.addCartProductId(id)
+        } catch {
+            errorMessage = error.localizedDescription
         }
     }
         

@@ -52,7 +52,7 @@ struct Details: View {
                 VStack {
                     Button {
                         
-                        
+                        viewModel.addToCart(product.id)
                         
                     } label: {
                         Text("Add to Cart")

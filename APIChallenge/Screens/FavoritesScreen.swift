@@ -56,7 +56,7 @@ struct Favorites: View {
         
         .sheet(item: $viewModel.selectedProduct) { product in
             if let index = viewModel.products.firstIndex(where: { $0.id == product.id }) {
-                Details(viewModel: DetailsViewModel(productService: ProductService(), favoriteService: FavoritesService()), product: $viewModel.products[index])
+                Details(viewModel: DetailsViewModel(productService: ProductService(), favoriteService: FavoritesService(), cartService: CartService()), product: $viewModel.products[index])
                     .presentationDragIndicator(.visible)
             }
         }
