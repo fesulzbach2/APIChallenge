@@ -51,9 +51,7 @@ struct Details: View {
                 
                 VStack {
                     Button {
-                        
-                        
-                        
+                        viewModel.addToCart(productId: product.id)
                     } label: {
                         Text("Add to Cart")
                             .fontWeight(.semibold)

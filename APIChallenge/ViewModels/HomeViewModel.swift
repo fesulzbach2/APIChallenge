@@ -31,7 +31,7 @@ class HomeViewModel: ObservableObject {
         isLoading = true
         
         do {
-            loadFavoritedProducts()
+            await loadFavoritedProducts()
             products = try await productService.fetchProducts()
             updateFavorites()
         } catch {
@@ -41,6 +41,7 @@ class HomeViewModel: ObservableObject {
         isLoading = false
     }
     
+    @MainActor
     func loadFavoritedProducts() {
         do {
             favoritedProducts = try favoriteService.fetchFavoritedProductsIDs()
@@ -59,6 +60,8 @@ class HomeViewModel: ObservableObject {
         }
     }
     
+    
+    @MainActor
     func toggleFavorite(product: Product) {
         if product.isFavorite {
             favoriteService.removeFavoritedProduct(id: product.id)

@@ -36,7 +36,7 @@ class CategoryViewModel: ObservableObject {
         isLoading = true
         
         do {
-            loadFavoritedProducts()
+            await loadFavoritedProducts()
             products = try await productService.fetchProducts()
             updateFavorites()
             filterProductsByCategory(category: category)
@@ -47,6 +47,7 @@ class CategoryViewModel: ObservableObject {
         isLoading = false
     }
     
+    @MainActor
     func loadFavoritedProducts() {
         do {
             favoritedProducts = try favoriteService.fetchFavoritedProductsIDs()

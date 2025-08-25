@@ -6,14 +6,13 @@
 //
 
 import SwiftUI
-import _SwiftData_SwiftUI
+import SwiftData
 
 struct CartView: View {
     
     var viewModel: CartViewModel
-    
-//    @Environment(\.modelContext) private var context
-    
+//    var products: [CartProduct]
+        
     var body: some View {
         VStack {
             Spacer()
@@ -22,12 +21,14 @@ struct CartView: View {
                 Spacer()
             } else {
                 ScrollView {
-                    ForEach(viewModel.cartProducts) { cartProduct in
-                        ProductCart(product: cartProduct.product,
-                                    quantity: cartProduct.quantity,
+                    ForEach(viewModel.productsInCart) { cartProduct in
+                        ProductCart(product: cartProduct,
+                                    quantity: viewModel.getQuantity(by: cartProduct.id),
                                     increaseQuantity: {viewModel.increaseQuantity(for: cartProduct)},
                                     decreaseQuantity: {viewModel.decreaseQuantity(for: cartProduct)}
                         )
+                        
+//                        products.append(CartProduct(productId: cartProduct.id, quantity: viewModel.increaseQuantity(for: cartProduct)))
                     }
                 }
                 .padding(.horizontal, 16)
@@ -44,7 +45,7 @@ struct CartView: View {
             .padding(.horizontal, 16)
             
             Button {
-                viewModel.checkout()
+//                viewModel.checkout(products: viewModel.getCartProducts())
             } label: {
                 ZStack {
                     Rectangle()

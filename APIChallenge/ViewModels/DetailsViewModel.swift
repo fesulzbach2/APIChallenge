@@ -11,20 +11,21 @@ import SwiftData
 
 @Observable
 class DetailsViewModel: ObservableObject {
-    
-    var product: Product?
-    
+        
     var isLoading: Bool = false
     var errorMessage: String? = nil
     
     private let productService: ProductServiceProtocol
     private let favoriteService: FavoritesServiceProtocol
+    private let cartService: CartServiceProtocol
     
-    init(productService: ProductServiceProtocol, favoriteService: FavoritesServiceProtocol) {
+    init(productService: ProductServiceProtocol, favoriteService: FavoritesServiceProtocol, cartService: CartServiceProtocol) {
         self.productService = productService
         self.favoriteService = favoriteService
+        self.cartService = cartService
     }
     
+    @MainActor
     func toggleFavorite(product: Product)  {
         if product.isFavorite {
             favoriteService.removeFavoritedProduct(id: product.id)
@@ -33,5 +34,14 @@ class DetailsViewModel: ObservableObject {
             
         }
     }
+    
+    func addToCart(productId: Int) {
+        do {
+            try cartService.addCartProductId(productId)
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
         
+    
 }

@@ -9,9 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct ProductDetailsImage: View {
-    
-   // @Environment(\.modelContext) var modelContext
-    
+        
     @Binding var product: Product
     
     var action: () -> Void

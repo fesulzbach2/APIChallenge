@@ -14,17 +14,14 @@ protocol FavoritesServiceProtocol {
     func removeFavoritedProduct(id: Int)
 }
 
-@Observable
 class FavoritesService: FavoritesServiceProtocol {
-        
     private let modelContext: ModelContext
-    private let modelContainer: ModelContainer
     
     @MainActor
     init() {
-        self.modelContainer = try! ModelContainer(for: FavoritedProduct.self, configurations: ModelConfiguration(isStoredInMemoryOnly: false))
-        self.modelContext = modelContainer.mainContext
+        self.modelContext = LocalPersistence.shared.modelContext
     }
+    
     
     func fetchFavoritedProductsIDs() throws -> [FavoritedProduct] {
         do {

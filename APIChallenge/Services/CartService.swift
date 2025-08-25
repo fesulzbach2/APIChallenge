@@ -9,38 +9,50 @@ import Foundation
 import SwiftData
 
 protocol CartServiceProtocol {
-    func getCartProductIds() throws -> [CartProductID]
-    func addCartProductId(_ cartProductID: CartProductID) throws -> Void
+    func getCartProductIds() throws -> [CartProduct]
+    func addCartProductId(_ productId: Int) throws -> Void
     
-    func updateCartProductId(_ cartProductID: CartProductID, quantity: Int) throws
+    func updateCartProductId(_ cartProductID: CartProduct, quantity: Int) throws
 //    func removeCartProductId(_ cartProductID: CartProductID) throws
 }
 
 
 class CartService: CartServiceProtocol {
-    private let modelContainer: ModelContainer
     private let modelContext: ModelContext
     
     @MainActor
     init() {
-        self.modelContainer = try! ModelContainer(for: CartProductID.self, configurations: ModelConfiguration(isStoredInMemoryOnly: false))
-        self.modelContext = modelContainer.mainContext
+        self.modelContext = LocalPersistence.shared.modelContext
     }
     
     
-    func getCartProductIds() throws -> [CartProductID] {
+    func getCartProductIds() throws -> [CartProduct] {
         do {
-            return try modelContext.fetch(FetchDescriptor<CartProductID>())
+            return try modelContext.fetch(FetchDescriptor<CartProduct>())
         } catch {
             throw NSError(domain: error.localizedDescription, code: 0)
         }
     }
     
-    func addCartProductId(_ cartProductID: CartProductID) throws -> Void {
-        modelContext.insert(cartProductID)
+    func getProductCart(by id: Int) throws -> CartProduct?  {
+        do {
+            let descriptor = FetchDescriptor<CartProduct>(predicate: #Predicate {$0.productId == id} )
+            return try modelContext.fetch(descriptor).first
+        } catch {
+            throw NSError(domain: error.localizedDescription, code: 0)
+        }
     }
     
-    func updateCartProductId(_ cartProductID: CartProductID, quantity: Int) throws {
+    func addCartProductId(_ productId: Int) throws -> Void {
+        if let cartProduct = try getProductCart(by: productId) {
+            try updateCartProductId(cartProduct, quantity: cartProduct.quantity + 1)
+        } else {
+            let newCartProduct = CartProduct(productId: productId, quantity: 1)
+            modelContext.insert(newCartProduct)
+        }
+    }
+    
+    func updateCartProductId(_ cartProductID: CartProduct, quantity: Int) throws {
         cartProductID.quantity = quantity
          try modelContext.save()
     }

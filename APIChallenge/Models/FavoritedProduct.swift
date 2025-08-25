@@ -5,15 +5,6 @@
 //  Created by Fernando Sulzbach on 15/08/25.
 //
 
-
-//
-//  ProductFavorites.swift
-//  APIChallenge
-//
-//  Created by Fernando Sulzbach on 15/08/25.
-//
-//
-
 import SwiftUI
 import SwiftData
 

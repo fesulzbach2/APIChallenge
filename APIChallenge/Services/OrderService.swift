@@ -9,27 +9,19 @@ import Foundation
 import SwiftData
 
 protocol OrderServiceProtocol {
-//    func addProductOrder(product: OrderedProduct) throws -> Void
     func addProductOrder(products: [CartProduct]) throws -> Void
     func fetchProductsOrder() throws -> [OrderedProduct]
 }
 
 
 class OrderService: OrderServiceProtocol {
-    
-    private let modelContainer: ModelContainer
     private let modelContext: ModelContext
     
     @MainActor
     init() {
-        self.modelContainer = try! ModelContainer(for: OrderedProduct.self, configurations: ModelConfiguration(isStoredInMemoryOnly: false))
-        self.modelContext = modelContainer.mainContext
+        self.modelContext = LocalPersistence.shared.modelContext
     }
-    
-//    func addProductOrder(product: OrderedProduct) throws -> Void {
-//        modelContext.insert(product)
-//    }
-    
+
     func fetchProductsOrder() throws -> [OrderedProduct] {
         do {
             return try modelContext.fetch(FetchDescriptor<OrderedProduct>())
@@ -39,9 +31,10 @@ class OrderService: OrderServiceProtocol {
     }
     
     func addProductOrder(products: [CartProduct]) throws {
-        for cartItem in products {
-            let orderProduct = OrderedProduct(productId: cartItem.id, product: cartItem.product, quantity: cartItem.quantity)
-            modelContext.insert(orderProduct)
-        }
+//        for product in products {
+//            let orderProduct = OrderedProduct(productId: product.id, productTitle: product.title, productDetails: product.details, productPrice: product.price, productThumbnail: product.thumbnail, productCategory: product.category, productShippingInformation: product.shippingInformation, productQuantity: 1)
+//            modelContext.insert(orderProduct)
+//            try? modelContext.save()
+//        }
     }
 }

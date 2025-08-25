@@ -15,6 +15,7 @@ class CartViewModel {
     var totalPrice: Double {
         calculateTotalPrice()
     }
+    var productsInCart: [Product] = []
     
     private let cartService: any CartServiceProtocol
     private let productService: any ProductServiceProtocol
@@ -27,10 +28,9 @@ class CartViewModel {
     }
     
     func getCartProducts() async {
-        
         do {
             
-            let cartProductIds: [CartProductID] = try cartService.getCartProductIds()
+            let cartProductIds: [CartProduct] = try cartService.getCartProductIds()
             let ids = cartProductIds.map { $0.productId }
             
             let produts: [Product] = try await productService.fetchProducts(for: ids)
@@ -40,79 +40,84 @@ class CartViewModel {
             for product in produts {
                 guard let item = cartProductIds.first(where: { $0.productId == product.id}) else { continue }
                 let quantity = item.quantity
-                let cartProduct = CartProduct(id: product.id, product: product, quantity: quantity)
+                let cartProduct = CartProduct(productId: product.id, quantity: quantity)
                 cartProducts.append(cartProduct)
-            }
+                if !productsInCart.contains(where: {$0.id == item.productId}) {
+                    productsInCart.append(product)
+                }
+            } 
             
             self.cartProducts = cartProducts
             
         } catch {
             errorMessage = error.localizedDescription
         }
-        
+    }
+    
+    func getQuantity(by id: Int) -> Int {
+        return cartProducts.first(where: { $0.productId == id })?.quantity ?? 1
     }
     
     func calculateTotalPrice() -> Double {
         var totalPrice = 0.0
         
         for cartProduct in cartProducts {
-            print(cartProduct.product)
-            print(cartProduct.quantity)
-            print(cartProduct.product.price)
-            totalPrice += Double(cartProduct.quantity) * cartProduct.product.price
+            
         }
         
         return totalPrice
     }
     
-    func increaseQuantity(for cartProduct: CartProduct) {
+    func increaseQuantity(for cartProduct: Product) {
         do {
             if let item = try cartService.getCartProductIds().first(where: { $0.productId == cartProduct.id }) {
                 //no banco
                 try cartService.updateCartProductId(item, quantity: item.quantity + 1)
                 
                 //na aplicacao
-                if let index = cartProducts.firstIndex(where: { $0.id == cartProduct.id }) {
-                    cartProducts[index].quantity += 1
-                }
+//                if let index = cartProducts.firstIndex(where: { $0.id == cartProduct.id }) {
+//                    cartProducts[index].quantity += 1
+//                }
             }
         } catch {
             
         }
     }
     
-    func decreaseQuantity(for cartProduct: CartProduct) {
+    func decreaseQuantity(for cartProduct: Product) {
         do {
             if let item = try cartService.getCartProductIds().first(where: { $0.productId == cartProduct.id }) {
                 //no banco
                 try cartService.updateCartProductId(item, quantity: item.quantity - 1)
                 
-                //na aplicacao
-                if let index = cartProducts.firstIndex(where: { $0.id == cartProduct.id }) {
-                    cartProducts[index].quantity -= 1
-                }
+//                //na aplicacao
+//                if let index = cartProducts.firstIndex(where: { $0.id == cartProduct }) {
+//                    cartProducts[index].quantity -= 1
+//                }
             }
         } catch {
             
         }
     }
     
-    func checkout() {
+    func checkout(products: [CartProduct]) {
         do {
             
+//            try orderService.addProductOrder(products: )
+            
             try orderService.addProductOrder(products: cartProducts)
+            
 
         } catch {
             print(error.localizedDescription)
         }
     }
     
-    func addProductInCart(product: CartProduct) {
+    func addProductInCart(id: Int) {
         do {
-            try cartService.addCartProductId(CartProductID(productId: product.id, quantity: product.quantity))
+            try cartService.addCartProductId(id)
         } catch {
             print(error.localizedDescription)
         }
     }
-    
 }
