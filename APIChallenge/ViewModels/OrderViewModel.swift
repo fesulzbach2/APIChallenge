@@ -30,7 +30,11 @@ class OrderViewModel {
             errorMessage = error.localizedDescription
         }
     }
-//    
+    
+    func cleanOrders() {
+        try? orderedService.cleanOrders()
+    }
+//
 //    func addProductOrder(_ OrderedProduct: [OrderedProduct]) {
 ////        orderedProducts.append(contentsOf: cartProducts)
 //        do {

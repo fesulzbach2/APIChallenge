@@ -27,7 +27,7 @@ class CartViewModel {
         self.orderService = orderService
     }
     
-    func getCartProducts() async {
+    func getCartProducts() async -> [CartProduct] {
         do {
             
             let cartProductIds: [CartProduct] = try cartService.getCartProductIds()
@@ -45,13 +45,14 @@ class CartViewModel {
                 if !productsInCart.contains(where: {$0.id == item.productId}) {
                     productsInCart.append(product)
                 }
-            } 
+            }
             
             self.cartProducts = cartProducts
             
         } catch {
             errorMessage = error.localizedDescription
         }
+        return cartProducts
     }
     
     func getQuantity(by id: Int) -> Int {
@@ -61,8 +62,10 @@ class CartViewModel {
     func calculateTotalPrice() -> Double {
         var totalPrice = 0.0
         
-        for cartProduct in cartProducts {
-            
+        for cart in cartProducts {
+            if let product = productsInCart.first(where: { $0.id == cart.productId }) {
+                totalPrice += Double(cart.quantity) * product.price
+            }
         }
         
         return totalPrice
@@ -74,10 +77,10 @@ class CartViewModel {
                 //no banco
                 try cartService.updateCartProductId(item, quantity: item.quantity + 1)
                 
-                //na aplicacao
-//                if let index = cartProducts.firstIndex(where: { $0.id == cartProduct.id }) {
-//                    cartProducts[index].quantity += 1
-//                }
+                //na aplicação
+                if let index = cartProducts.firstIndex(where: { $0.productId == cartProduct.id }) {
+                    cartProducts[index].quantity += 1
+                }
             }
         } catch {
             
@@ -90,10 +93,10 @@ class CartViewModel {
                 //no banco
                 try cartService.updateCartProductId(item, quantity: item.quantity - 1)
                 
-//                //na aplicacao
-//                if let index = cartProducts.firstIndex(where: { $0.id == cartProduct }) {
-//                    cartProducts[index].quantity -= 1
-//                }
+                //na aplicação
+                if let index = cartProducts.firstIndex(where: { $0.productId == cartProduct.id }) {
+                    cartProducts[index].quantity -= 1
+                }
             }
         } catch {
             
@@ -102,12 +105,29 @@ class CartViewModel {
     
     func checkout(products: [CartProduct]) {
         do {
+            var ordered: [OrderedProduct] = []
             
-//            try orderService.addProductOrder(products: )
+            for cart in cartProducts {
+                if let product = productsInCart.first(where: { $0.id == cart.productId }) {
+                    let orderedProduct = OrderedProduct(
+                        productId: product.id,
+                        productTitle: product.title,
+                        productDetails: product.details,
+                        productPrice: product.price * Double(cart.quantity),
+                        productThumbnail: product.thumbnail,
+                        productCategory: product.category,
+                        productShippingInformation: product.shippingInformation,
+                        productQuantity: cart.quantity
+                    )
+                    ordered.append(orderedProduct)
+                    
+                    print("product: \(product.title) quantity: \(cart.quantity)")
+                }
+            }
             
-            try orderService.addProductOrder(products: cartProducts)
+            try orderService.addProductOrder(products: ordered)
+            cleanCart()
             
-
         } catch {
             print(error.localizedDescription)
         }
@@ -120,4 +140,15 @@ class CartViewModel {
             print(error.localizedDescription)
         }
     }
+    
+    func cleanCart() {
+        do {
+            cartService.cleanCart()
+            cartProducts.removeAll()
+            productsInCart.removeAll()
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
 }

@@ -45,7 +45,7 @@ struct CartView: View {
             .padding(.horizontal, 16)
             
             Button {
-//                viewModel.checkout(products: viewModel.getCartProducts())
+                viewModel.checkout(products: viewModel.cartProducts)
             } label: {
                 ZStack {
                     Rectangle()
@@ -64,6 +64,8 @@ struct CartView: View {
         .navigationBarTitleDisplayMode(.large)
         .task {
             await viewModel.getCartProducts()
+            print("quantas coisas tem no carrinho:")
+            print(viewModel.productsInCart.count)
         }
         .padding(.vertical, 16)
     }
