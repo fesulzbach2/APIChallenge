@@ -12,64 +12,57 @@ import SwiftData
 struct OrdersView: View {
     
     
-    @Environment(\.modelContext) var modelContext
+    var viewModel: OrderViewModel
     
-    @Query var OrderedProducts: [OrderedProduct]
+    @State private var searchText = ""
     
-    var filteredOrderedProducts: [OrderedProduct] {
+    var filteredProducts: [OrderedProduct] {
         if searchText.isEmpty {
-            return OrderedProducts
+            return viewModel.orderedProducts
         } else {
-            return OrderedProducts.filter {
-                $0.title.localizedCaseInsensitiveContains(searchText)
+            return viewModel.orderedProducts.filter { product in
+                product.productTitle.lowercased().contains(searchText.lowercased())
             }
         }
     }
     
-    @State var empty: Bool = false
-    
-    @State private var selectedProduct: Product?
-    
-    @State private var searchText = ""
-    
     var body: some View {
-        
         NavigationStack {
-            
+            ScrollView {
                 VStack{
-                    
-                    if(filteredOrderedProducts.isEmpty) {
-                        
+                    if(viewModel.orderedProducts.isEmpty) {
                         EmptyState(icon: "suitcase", headerText: "No orders yet!", footerText: "Buy an item and it will show up here.")
                     } else {
-                        List(filteredOrderedProducts) { product in
-                            ProductOrder(product: product)
-                                .padding(.top, 16)
-                                .listRowInsets(EdgeInsets())
-                                .listRowSeparator(.hidden)
+                        
+                        ForEach(filteredProducts    ) { product in
+                            ProductOrder(orderedProduct: product)
                         }
                         .scrollContentBackground(.hidden)
                         .listStyle(.plain)
-
+                        
+                        
+                        //temporario para ajudar a depurar
+//                        Button("clean") {
+//                            viewModel.cleanOrders()
+//                        }
+//                        .padding()
+//                        .background(Color.blue)
+//                        .foregroundColor(.white)
+//                        .cornerRadius(8)
                     }
-                    
                 }
                 .padding(.horizontal)
                 .scrollIndicators(.hidden)
                 .navigationTitle("Orders")
                 .searchable(text: $searchText)
-                
-            
-            
-            
-            
+            }
         }
         .toolbarBackground(.backgroundsPrimary, for: .tabBar)
         .toolbarBackgroundVisibility(.visible, for: .tabBar)
-
-         
+        .task {
+            await viewModel.getOrderedProducts()
+        }
     }
-        
 }
 
 #Preview {

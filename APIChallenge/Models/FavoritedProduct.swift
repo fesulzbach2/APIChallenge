@@ -5,21 +5,12 @@
 //  Created by Fernando Sulzbach on 15/08/25.
 //
 
-
-//
-//  ProductFavorites.swift
-//  APIChallenge
-//
-//  Created by Fernando Sulzbach on 15/08/25.
-//
-//
-
 import SwiftUI
 import SwiftData
 
 @Model
 final class FavoritedProduct {
-    @Attribute(.unique) var id: Int
+    var id: Int
 
     init(id: Int) {
         self.id = id

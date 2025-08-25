@@ -6,29 +6,36 @@
 //
 
 import SwiftUI
-import _SwiftData_SwiftUI
+import SwiftData
 
 struct CartView: View {
     
     var viewModel: CartViewModel
-    
+//    var products: [CartProduct]
+        
     var body: some View {
         VStack {
+            Spacer()
             if viewModel.cartProducts.isEmpty {
                 EmptyState(icon: "cart.badge.questionmark", headerText: "Your cart is empty!", footerText: "Add an item to your cart.")
+                Spacer()
             } else {
                 ScrollView {
-                    ForEach(viewModel.cartProducts) { cartProduct in
-                        ProductCart(product: cartProduct.product,
-                                    quantity: cartProduct.quantity,
+                    ForEach(viewModel.productsInCart) { cartProduct in
+                        ProductCart(product: cartProduct,
+                                    quantity: viewModel.getQuantity(by: cartProduct.id),
                                     increaseQuantity: {viewModel.increaseQuantity(for: cartProduct)},
                                     decreaseQuantity: {viewModel.decreaseQuantity(for: cartProduct)}
                         )
+                        
+//                        products.append(CartProduct(productId: cartProduct.id, quantity: viewModel.increaseQuantity(for: cartProduct)))
                     }
                 }
                 .padding(.horizontal, 16)
             }
-
+            
+            Spacer()
+            
             HStack {
                 Text("Total:")
                 Spacer()
@@ -36,13 +43,31 @@ struct CartView: View {
                     .typography(.headline)
             }
             .padding(.horizontal, 16)
+            
+            Button {
+                viewModel.checkout(products: viewModel.cartProducts)
+            } label: {
+                ZStack {
+                    Rectangle()
+                        .foregroundStyle(.fillsTertiary)
+                        .frame(height: 54)
+                        .frame(width: 361)
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                    
+                    Text("Checkout")
+                        .foregroundStyle(.labelsPrimary)
+                        .typography(.bodyEmphasized)
+                }
+            }
         }
         .navigationTitle("Cart")
         .navigationBarTitleDisplayMode(.large)
         .task {
             await viewModel.getCartProducts()
+            print("quantas coisas tem no carrinho:")
+            print(viewModel.productsInCart.count)
         }
-        .padding(.top, 16)
+        .padding(.vertical, 16)
     }
 }
 

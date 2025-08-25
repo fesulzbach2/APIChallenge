@@ -42,6 +42,8 @@ class ProductService: ProductServiceProtocol {
         let (data, _) = try await URLSession.shared.data(from: url)
         let response = try JSONDecoder().decode(ProductResponse.self, from: data)
         
+        print(response.products)
+        
         return response.products
     }
     

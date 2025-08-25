@@ -34,7 +34,7 @@ class FavoritesViewModel: ObservableObject {
         isLoading = true
         
         do {
-            let favoritedProductsIDs: [FavoritedProduct] = try favoriteService.fetchFavoritedProductsIDs()
+            let favoritedProductsIDs: [FavoritedProduct] = try await favoriteService.fetchFavoritedProductsIDs()
             let ids = favoritedProductsIDs.map { $0.id }
             let fetchedProducts = try await productService.fetchProducts(for: ids)
             

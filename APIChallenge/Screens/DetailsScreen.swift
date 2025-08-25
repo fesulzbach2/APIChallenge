@@ -39,7 +39,7 @@ struct Details: View {
                             .font(.system(size: 22))
                         }
                         
-                        Text(product.description)
+                        Text(product.details)
                             .fontWeight(.regular)
                             .font(.system(size: 17))
                             .foregroundStyle(.labelsSecondary)
@@ -51,9 +51,7 @@ struct Details: View {
                 
                 VStack {
                     Button {
-                        
-                        
-                        
+                        viewModel.addToCart(productId: product.id)
                     } label: {
                         Text("Add to Cart")
                             .fontWeight(.semibold)
