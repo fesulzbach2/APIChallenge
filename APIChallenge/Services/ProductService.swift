@@ -4,7 +4,7 @@
 //
 //  Created by Eduardo Pasqualotto Riboli on 04/08/25.
 //
-// MARK: - URL from API: https://rickandmortyapi.com/documentation
+
 import Foundation
 
 class ProductService: ProductServiceProtocol {
