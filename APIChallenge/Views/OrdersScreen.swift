@@ -34,7 +34,7 @@ struct OrdersView: View {
                         EmptyState(icon: "suitcase", headerText: "No orders yet!", footerText: "Buy an item and it will show up here.")
                     } else {
                         
-                        ForEach(filteredProducts    ) { product in
+                        ForEach(filteredProducts) { product in
                             ProductOrder(orderedProduct: product)
                         }
                         .scrollContentBackground(.hidden)
@@ -62,6 +62,7 @@ struct OrdersView: View {
         .task {
             await viewModel.getOrderedProducts()
         }
+        
     }
 }
 

@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftData
 
 struct Favorites: View {
-
+    
     @State var viewModel: FavoritesViewModel
     
     var body: some View {
@@ -24,9 +24,9 @@ struct Favorites: View {
                 } else {
                     
                     List(viewModel.filteredFavorites) { product in
-
+                        
                         ProductFavorite(product: product)
-                           .padding(.top, 16)
+                            .padding(.top, 16)
                             .scrollContentBackground(.hidden)
                             .listStyle(.plain)
                             .listRowInsets(EdgeInsets())
@@ -40,7 +40,6 @@ struct Favorites: View {
                     .listRowInsets(EdgeInsets())
                     .refreshable {
                         await viewModel.loadProducts()
-                    //    viewModel.updateFavorites(favoritedProducts: favoritedProducts)
                     }
                 }
                 
@@ -59,25 +58,16 @@ struct Favorites: View {
                 await viewModel.loadProducts()
             }
         }, content: { product in
-                if let index = viewModel.products.firstIndex(where: { $0.id == product.id }) {
-                    Details(viewModel: DetailsViewModel(productService: ProductService(), favoriteService: FavoritesService(), cartService: CartService()), product: $viewModel.products[index])
-                        .presentationDragIndicator(.visible)
-                }
+            if let index = viewModel.products.firstIndex(where: { $0.id == product.id }) {
+                Details(viewModel: DetailsViewModel(productService: ProductService(), favoriteService: FavoritesService(), cartService: CartService()), product: $viewModel.products[index])
+                    .presentationDragIndicator(.visible)
+            }
         })
         
         .task {
-            
             await viewModel.loadProducts()
-           // viewModel.updateFavorites(favoritedProducts: favoritedProducts)
         }
-        
-//        .onChange(of: favoritedProducts) { _ in
-//           viewModel.updateFavorites(favoritedProducts: favoritedProducts)
-//        }
-
-         
     }
-        
 }
 
 #Preview {

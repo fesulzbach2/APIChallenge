@@ -12,13 +12,9 @@ struct ProductCart: View {
     var category: Category? {
         Category(rawValue: product.category)
     }
-    //    var price: Double = 0.0
     var product: Product
     
     @State var quantity: Int = 1
-    
-//    var cartViewModel: CartViewModel = CartViewModel(cartService: CartService(), productService: ProductService())
-//
     
     var increaseQuantity: ()->Void
     var decreaseQuantity: ()->Void
@@ -27,15 +23,6 @@ struct ProductCart: View {
     var body: some View {
         
         HStack(spacing: 16) {
-            //            if let category {
-            //                category.image
-            //                    .resizable()
-            //                    .frame(width: 78, height: 78)
-            //                    .clipShape(RoundedRectangle(cornerRadius: 12))
-            //                    .frame(alignment: .leading)
-            //            } else {
-            //
-            //            }
             AsyncImage(url: URL(string: product.thumbnail)) { image in
                 image
                     .resizable()
@@ -90,17 +77,15 @@ struct ProductCart: View {
                             )
                             .foregroundStyle(.labelsPrimary)
                     }
+                    .accessibilityLabel("decrease the quantity of \(product.title) in the cart")
                     
                     Text(quantity.description)
                         .fontWeight(.regular)
                         .font(.system(size: 17))
                         .frame(width: 25)
-                    //  .frame(width: 16, height: 22, alignment: .center)
                     
                     Button {
                         quantity += 1
-//                        let cartProductAux = CartProduct(id: product.id, product: product, quantity: quantity)
-//                        cartViewModel.increaseQuantity(for: cartProductAux)
                         increaseQuantity()
                         
                     } label: {
@@ -116,7 +101,7 @@ struct ProductCart: View {
                             )
                             .foregroundStyle(.labelsPrimary)
                     }
-                    
+                    .accessibilityLabel("increase the quantity of \(product.title) in the cart")
                     
                     
                 }

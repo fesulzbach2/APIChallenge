@@ -11,6 +11,12 @@ struct ProductOrder: View {
     
     var orderedProduct: OrderedProduct
     
+    private var accessibilityText: String {
+        let total = Double(orderedProduct.productPrice) * Double(orderedProduct.productQuantity)
+        let totalFormatted = String(format: "%.2f", total)
+        return "\(orderedProduct.productTitle) for \(totalFormatted) dollars"
+    }
+    
     var body: some View {
         
         HStack(spacing: 16) {
@@ -50,6 +56,7 @@ struct ProductOrder: View {
                 .frame(height: 62)
                 
             }
+            .accessibilityLabel(accessibilityText)
         }
         .padding(.vertical, 8)
         .padding(.leading, 8)
@@ -60,7 +67,6 @@ struct ProductOrder: View {
             RoundedRectangle(cornerRadius: 16)
                 .foregroundStyle(.backgroundsSecondary)
         )
-        
     }
 }
 
