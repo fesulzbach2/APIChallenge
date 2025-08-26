@@ -27,8 +27,6 @@ struct CartView: View {
                                     increaseQuantity: {viewModel.increaseQuantity(for: cartProduct)},
                                     decreaseQuantity: {viewModel.decreaseQuantity(for: cartProduct)}
                         )
-                        
-//                        products.append(CartProduct(productId: cartProduct.id, quantity: viewModel.increaseQuantity(for: cartProduct)))
                     }
                 }
                 .padding(.horizontal, 16)

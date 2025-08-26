@@ -1,12 +1,90 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@ Favorited. Double click to change" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ Favoritado. Clique duas vezes para desfavoritar"
+          }
+        }
+      }
+    },
+    "%@ Not Favorited. Double click to change" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ Não favoritado. Clique duas vezes para favoritar"
+          }
+        }
+      }
+    },
+    "%@, US$ %@ dolars" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, US$ %2$@ dolars"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, R$ %2$@ reais"
+          }
+        }
+      }
+    },
     "Add to Cart" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Adicionar ao Carrinho"
+          }
+        }
+      }
+    },
+    "Adicionar %@ ao carrinho" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicionar %@ ao carrinho"
+          }
+        }
+      }
+    },
+    "Card with deals of the day. %@, US$ %@ dolars" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Card with deals of the day. %1$@, US$ %2$@ dolars"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Card com as ofertas do dia. %1$@, R$ %2$@ reais"
+          }
+        }
+      }
+    },
+    "Card with top pick. %@, US$ %@ dolars" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Card with top pick. %1$@, US$ %2$@ dolars"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Card com as principais escolhas. %1$@, R$ %2$@ reais"
           }
         }
       }
@@ -32,7 +110,14 @@
       }
     },
     "Checkout" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comprar"
+          }
+        }
+      }
     },
     "Deals of the day" : {
       "localizations" : {
@@ -44,12 +129,25 @@
         }
       }
     },
+    "decrease the quantity of %@ in the cart" : {
+
+    },
     "Details" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Detalhes"
+          }
+        }
+      }
+    },
+    "double click to add this product to cart" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "clique duas vezes para adicionar esse produto ao carrinho"
           }
         }
       }
@@ -73,6 +171,9 @@
           }
         }
       }
+    },
+    "increase the quantity of %@ in the cart" : {
+
     },
     "Orders" : {
       "localizations" : {
@@ -105,14 +206,21 @@
       }
     },
     "Total:" : {
-
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total"
+          }
+        }
+      }
     },
     "US$%@" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "R$"
+            "value" : "R$ %@"
           }
         }
       }

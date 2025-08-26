@@ -69,13 +69,4 @@ class HomeViewModel: ObservableObject {
             favoriteService.addFavoritedProduct(id: product.id)
         }
     }
-    
-//    var filteredFavorites: [Product] {
-//        
-//        if searchText.isEmpty {
-//            return products.filter { $0.isFavorite }
-//        } else {
-//            return products.filter { $0.isFavorite && $0.title.lowercased().contains(searchText.lowercased()) }
-//        }
-//    }
 }

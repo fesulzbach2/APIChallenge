@@ -39,6 +39,7 @@ struct CategoriesScreen: View {
                         ForEach(Category.allCases, id: \.id) { category in
                             HStack{
                                 CategoryIcon(category: category, action: {print("botao funcionando")})
+                                    .accessibilityLabel("\(category) double click to enter")
                             }
                         }
                     }
@@ -50,6 +51,7 @@ struct CategoriesScreen: View {
                 ForEach(viewModel.filteredCategories, id: \.self) { category in
                     categoryList(category: category)
                         .padding(.vertical, 19)
+                        .accessibilityLabel("\(category) double click to enter")
                     Divider()
                 }
                 .padding(.horizontal, 16)
