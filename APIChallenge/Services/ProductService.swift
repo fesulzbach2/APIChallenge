@@ -7,6 +7,12 @@
 
 import Foundation
 
+protocol ProductServiceProtocol {
+    func fetchProduct(number: Int) async throws -> Product
+    func fetchProducts() async throws -> [Product]
+    func fetchProducts(for ids: [Int]) async throws -> [Product]
+}
+
 class ProductService: ProductServiceProtocol {
     
     private let baseURL = "https://dummyjson.com"

@@ -73,8 +73,8 @@ struct FavoritesViewModelTests {
         
         viewModel.products = [
             Product (id: 1, title: "Luva de Lã", details: "This Product is a product", price: 10.50, thumbnail: "thumbnail mock", category: "Beauty", shippingInformation: "Ships in 2-3 days"),
-            Product (id: 1, title: "Casaco de Couro", details: "This Product is a product", price: 10.50, thumbnail: "thumbnail mock", category: "Beauty", shippingInformation: "Ships in 2-3 days"),
-            Product (id: 1, title: "Cachecol de Lã", details: "This Product is a product", price: 10.50, thumbnail: "thumbnail mock", category: "Beauty", shippingInformation: "Ships in 2-3 days"),
+            Product (id: 2, title: "Casaco de Couro", details: "This Product is a product", price: 10.50, thumbnail: "thumbnail mock", category: "Beauty", shippingInformation: "Ships in 2-3 days"),
+            Product (id: 3, title: "Cachecol de Lã", details: "This Product is a product", price: 10.50, thumbnail: "thumbnail mock", category: "Beauty", shippingInformation: "Ships in 2-3 days"),
         ]
         
         

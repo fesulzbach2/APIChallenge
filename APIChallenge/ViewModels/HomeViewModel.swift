@@ -17,7 +17,7 @@ class HomeViewModel: ObservableObject {
     
     var isLoading: Bool = true
     var errorMessage: String? = nil
-    
+
     
     private let productService: ProductServiceProtocol
     private let favoriteService: FavoritesServiceProtocol
