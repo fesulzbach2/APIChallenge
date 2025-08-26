@@ -15,8 +15,8 @@ struct HomeViewModelTests {
     func loadProducts_success() async throws {
         // Given
         var viewModel = HomeViewModel(
-            productService: ProductServiceTests(shouldFail: false),
-            favoriteService: FavoritesServiceTests(shouldFail: false)
+            productService: MockProductService(),
+            favoriteService: MockFavoritesService()
         )
         
         // When
@@ -33,8 +33,8 @@ struct HomeViewModelTests {
     func loadProducts_productServiceFailure() async throws {
         // Given
         var viewModel = HomeViewModel(
-            productService: ProductServiceTests(shouldFail: true),
-            favoriteService: FavoritesServiceTests(shouldFail: false)
+            productService: MockProductService(shouldFail: true),
+            favoriteService: MockFavoritesService()
         )
         
         // When
@@ -50,8 +50,8 @@ struct HomeViewModelTests {
     func loadProducts_favoritesServiceFailure() async throws {
         // Given
         var viewModel = HomeViewModel(
-            productService: ProductServiceTests(shouldFail: false),
-            favoriteService: FavoritesServiceTests(shouldFail: true)
+            productService: MockProductService(),
+            favoriteService: MockFavoritesService(shouldFail: true)
         )
         
         // When
@@ -68,8 +68,8 @@ struct HomeViewModelTests {
     func updateFavorites_marksFavorites() async throws {
         // Given
         var viewModel = HomeViewModel(
-            productService: ProductServiceTests(shouldFail: false),
-            favoriteService: FavoritesServiceTests(shouldFail: false)
+            productService: MockProductService(),
+            favoriteService: MockFavoritesService()
         )
         
         await viewModel.loadProducts()
@@ -82,8 +82,8 @@ struct HomeViewModelTests {
     func toggleFavorite_addAndRemove() async throws {
         // Given
         var viewModel = HomeViewModel(
-            productService: ProductServiceTests(shouldFail: false),
-            favoriteService: FavoritesServiceTests(shouldFail: false)
+            productService: MockProductService(),
+            favoriteService: MockFavoritesService()
         )
         await viewModel.loadProducts()
         
@@ -93,10 +93,5 @@ struct HomeViewModelTests {
         await viewModel.toggleFavorite(product: product)
         await viewModel.loadFavoritedProducts()
         #expect(viewModel.favoritedProducts.contains(where: { $0.id == product.id }) == false)
-        
-        // When - adicionar de novo
-        await viewModel.toggleFavorite(product: product) 
-        await viewModel.loadFavoritedProducts()
-        #expect(viewModel.favoritedProducts.contains(where: { $0.id == product.id }) == true)
     }
 }

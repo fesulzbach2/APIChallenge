@@ -2,11 +2,11 @@ import Foundation
 @testable import APIChallenge
 
 
-class FavoritesServiceTests: FavoritesServiceProtocol {
+class MockFavoritesService: FavoritesServiceProtocol {
     
     var shouldFail = false
     
-    private var favoritedIDs: [FavoritedProduct]
+    private var favoritedIDs: [FavoritedProduct] = []
 
     init(shouldFail: Bool = false) {
         self.shouldFail = shouldFail

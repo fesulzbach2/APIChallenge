@@ -9,13 +9,13 @@
 import Foundation
 @testable import APIChallenge // Importa seu app para ter acesso ao protocolo e modelos
 
-class ProductServiceTests: ProductServiceProtocol {
+class MockProductService: ProductServiceProtocol {
         
     var mockProducts: [Product]
     
     var shouldFail: Bool
     
-    init(shouldFail: Bool) {
+    init(shouldFail: Bool = false) {
         self.shouldFail = shouldFail
         if shouldFail {
             self.mockProducts = []

@@ -32,8 +32,13 @@ class OrderViewModel {
     }
     
     func cleanOrders() {
-        try? orderedService.cleanOrders()
+        do {
+            try orderedService.cleanOrders()
+        } catch {
+            errorMessage = error.localizedDescription
+        }
     }
+
 //
 //    func addProductOrder(_ OrderedProduct: [OrderedProduct]) {
 ////        orderedProducts.append(contentsOf: cartProducts)

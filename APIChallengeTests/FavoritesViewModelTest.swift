@@ -8,10 +8,10 @@ struct FavoritesViewModelTests {
     @Test func test_fetchProductsSucess() async throws {
             
             // Given
-            var viewModel = FavoritesViewModel(productService: ProductServiceTests(shouldFail: false), favoriteService: FavoritesServiceTests(shouldFail: false))
+            var viewModel = FavoritesViewModel(productService: MockProductService(), favoriteService: MockFavoritesService())
         
-            var productService = ProductServiceTests(shouldFail: false)
-            var favoriteService = FavoritesServiceTests(shouldFail: false)
+            var productService = MockProductService()
+            var favoriteService = MockFavoritesService()
             
             // When
             await viewModel.loadProducts()
@@ -31,7 +31,7 @@ struct FavoritesViewModelTests {
     func loadProducts_noFavorites() async throws {
         
         // Given
-        var viewModel = FavoritesViewModel(productService: ProductServiceTests(shouldFail: true), favoriteService: FavoritesServiceTests(shouldFail: true))
+        var viewModel = FavoritesViewModel(productService: MockProductService(shouldFail: true), favoriteService: MockFavoritesService(shouldFail: true))
         
         // Then
         await viewModel.loadProducts()
@@ -46,10 +46,10 @@ struct FavoritesViewModelTests {
     func loadProducts_productServiceFailure() async throws {
         
         // Given
-        var viewModel = FavoritesViewModel(productService: ProductServiceTests(shouldFail: true), favoriteService: FavoritesServiceTests(shouldFail: false))
+        var viewModel = FavoritesViewModel(productService: MockProductService(shouldFail: true), favoriteService: MockFavoritesService())
     
-        var productService = ProductServiceTests(shouldFail: true)
-        var favoriteService = FavoritesServiceTests(shouldFail: false)
+        var productService = MockProductService(shouldFail: true)
+        var favoriteService = MockFavoritesService()
         
         // When
         await viewModel.loadProducts()
@@ -69,7 +69,7 @@ struct FavoritesViewModelTests {
     func filteredFavorites_withSearchText() {
         
         // Given
-        var viewModel = FavoritesViewModel(productService: ProductServiceTests(shouldFail: true), favoriteService: FavoritesServiceTests(shouldFail: false))
+        var viewModel = FavoritesViewModel(productService: MockProductService(shouldFail: true), favoriteService: MockFavoritesService(shouldFail: false))
         
         viewModel.products = [
             Product (id: 1, title: "Luva de Lã", details: "This Product is a product", price: 10.50, thumbnail: "thumbnail mock", category: "Beauty", shippingInformation: "Ships in 2-3 days"),
