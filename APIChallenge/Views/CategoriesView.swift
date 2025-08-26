@@ -43,6 +43,8 @@ struct CategoriesScreen: View {
                         }
                     }
                 }
+                .scrollIndicators(.hidden)
+                .contentMargins(.leading, 16)
                 .padding(.top, 16)
                 
                 ForEach(viewModel.filteredCategories, id: \.self) { category in
@@ -50,10 +52,11 @@ struct CategoriesScreen: View {
                         .padding(.vertical, 19)
                     Divider()
                 }
+                .padding(.horizontal, 16)
             }
             .navigationTitle("Categories")
             .navigationBarTitleDisplayMode(.large)
-            .padding(.horizontal, 16)
+            .padding(.horizontal, 0)
             .searchable(text: $viewModel.searchText, prompt: "Search")
             
         }

@@ -67,7 +67,7 @@ struct Details: View {
                // .frame(height: 86)
             }
             .padding(.horizontal)
-            
+            .background(.backgroundsPrimary)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Details")
             .toolbarBackground(.backgroundsSecondary, for: .navigationBar)
@@ -79,17 +79,16 @@ struct Details: View {
         
 }
 
-//#Preview {
-//    @State var previewProduct = Product(
-//        id: 1,
-//        title: "Example ProductExample",
-//        description: "okkkk",
-//        price: 99.9,
-//        thumbnail: "https://via.placeholder.com/150",
-//        category: "Beauty",
-//        shippingInformation: "Delivery blabla"
-//    )
-//    
-//    return Details(product: $previewProduct)
-//}
+#Preview {
+    @State var previewProduct = Product(
+        id: 1,
+        title: "Example ProductExample", details: "KKKKKK",
+        price: 99.9,
+        thumbnail: "https://via.placeholder.com/150",
+        category: "Beauty",
+        shippingInformation: "Delivery blabla"
+    )
+    
+    Details(viewModel: DetailsViewModel(productService: ProductService(), favoriteService: FavoritesService(), cartService: CartService()), product: $previewProduct)
+}
 

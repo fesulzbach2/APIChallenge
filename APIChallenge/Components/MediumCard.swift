@@ -19,7 +19,8 @@ struct MediumCard: View {
         let twoLineMinHeight = spec.lineHeight * 2
         
         return VStack(alignment: .leading){
-            Text(product.details)
+            Text(product.title)
+                .multilineTextAlignment(.leading)
                 .typography(.subheadlineRegular)
                 .foregroundStyle(.labelsPrimary)
                 .lineLimit(2)
@@ -37,7 +38,7 @@ struct MediumCard: View {
         AsyncImage(url: URL(string: product.thumbnail)) { image in
             image
                 .resizable()
-                .scaledToFill()
+                .scaledToFit()
                 .clipShape(RoundedRectangle(cornerRadius: 12))
         } placeholder: {
             Image(.placeholder)
