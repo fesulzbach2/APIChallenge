@@ -9,12 +9,14 @@ import Foundation
 import SwiftData
 
 protocol OrderServiceProtocol {
-    func addProductOrder(products: [CartProduct]) throws -> Void
+    func addProductOrder(products: [OrderedProduct]) throws -> Void
     func fetchProductsOrder() throws -> [OrderedProduct]
+    func cleanOrders() throws -> Void
 }
 
 
 class OrderService: OrderServiceProtocol {
+    
     private let modelContext: ModelContext
     
     @MainActor
@@ -30,11 +32,23 @@ class OrderService: OrderServiceProtocol {
         }
     }
     
-    func addProductOrder(products: [CartProduct]) throws {
-//        for product in products {
-//            let orderProduct = OrderedProduct(productId: product.id, productTitle: product.title, productDetails: product.details, productPrice: product.price, productThumbnail: product.thumbnail, productCategory: product.category, productShippingInformation: product.shippingInformation, productQuantity: 1)
-//            modelContext.insert(orderProduct)
-//            try? modelContext.save()
-//        }
+    func addProductOrder(products: [OrderedProduct]) throws {
+        
+        for product in products {
+            modelContext.insert(product)
+            try? modelContext.save()
+        }
+    }
+    
+    func cleanOrders() throws {
+        do {
+            let allOrders = try modelContext.fetch(FetchDescriptor<OrderedProduct>())
+            for order in allOrders {
+                modelContext.delete(order)
+            }
+            try modelContext.save()
+        } catch {
+            
+        }
     }
 }

@@ -13,6 +13,7 @@ protocol CartServiceProtocol {
     func addCartProductId(_ productId: Int) throws -> Void
     
     func updateCartProductId(_ cartProductID: CartProduct, quantity: Int) throws
+    func cleanCart()
 //    func removeCartProductId(_ cartProductID: CartProductID) throws
 }
 
@@ -57,8 +58,15 @@ class CartService: CartServiceProtocol {
          try modelContext.save()
     }
     
-//    func removeCartProductId(_ cartProductID: CartProductID) throws {
-//        cartProductID.delete = quantity
-//         try modelContext.save()
-//    }
+    func cleanCart() {
+        do {
+            let allOrders = try modelContext.fetch(FetchDescriptor<CartProduct>())
+            for order in allOrders {
+                modelContext.delete(order)
+            }
+            try modelContext.save()
+        } catch {
+            
+        }
+    }
 }
