@@ -24,9 +24,7 @@ class ProductViewModel: ProductViewModelProtocol, ObservableObject {
         isLoading = true
         
         do {
-//            product = try await service.fetchProduct(number: 2)
             products = try await service.fetchProducts()
-//            print(products)
         } catch {
             errorMessage = "Error to fetch products: \(error.localizedDescription)"
         }

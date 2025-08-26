@@ -43,6 +43,7 @@ struct ProductDetailsImage: View {
                                     .frame(width: 50, height: 50)
                                     .background(RoundedRectangle(cornerRadius: 8)
                                         .foregroundStyle(.gray5))
+                                    .accessibilityLabel(product.isFavorite ? "\(product.title) Favorited. Double click to change" : "\(product.title) Not Favorited. Double click to change")
                             }
                             , alignment: .topTrailing)
                 

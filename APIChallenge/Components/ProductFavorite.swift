@@ -28,6 +28,7 @@ struct ProductFavorite: View {
                         .frame(width: 78, height: 78)
                         .frame(alignment: .leading)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .accessibilityHidden(true)
             
             HStack(spacing: 16) {
                 VStack(alignment: .leading) {
@@ -43,6 +44,8 @@ struct ProductFavorite: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .frame(height: 62)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("\(product.title), US$ \(String(format: "%.2f", product.price)) dolars")
                 
                 VStack(alignment: .trailing) {
                     
@@ -61,8 +64,8 @@ struct ProductFavorite: View {
                             )
                             .foregroundStyle(.white)
                     }
-                    
-                    
+                    .accessibilityLabel("Adicionar \(product.title) ao carrinho")
+                    .accessibilityHint("double click to add this product to cart")
                 }
             }
         }
