@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "6642FD17-E057-4489-B5BE-D934C8C4BFFD",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:APIChallenge.xcodeproj",
+      "identifier" : "751116782E4D1B24002E91A7",
+      "name" : "APIChallenge"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:APIChallenge.xcodeproj",
+        "identifier" : "751116852E4D1B25002E91A7",
+        "name" : "APIChallengeTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:APIChallenge.xcodeproj",
+        "identifier" : "7511168F2E4D1B25002E91A7",
+        "name" : "APIChallengeUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

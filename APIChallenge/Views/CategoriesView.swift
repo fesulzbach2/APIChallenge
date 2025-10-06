@@ -6,11 +6,26 @@
 //
 
 import SwiftUI
+#if os(iOS)
+import UIKit
+#endif
 
 struct CategoriesScreen: View {
 
     
     @State var viewModel: CategoriesViewModel
+    
+    private var iconPrefixCount: Int {
+        UIDevice.current.userInterfaceIdiom == .pad ? 8 : 4
+    }
+    
+    private var iconPrefixDistance: Int {
+        UIDevice.current.userInterfaceIdiom == .pad ? 16 : 8
+    }
+    
+    private var screenPadding: Int {
+        UIDevice.current.userInterfaceIdiom == .pad ? 32 : 16
+    }
     
     func categoryList (category: Category) -> some View {
         NavigationLink {
@@ -34,19 +49,14 @@ struct CategoriesScreen: View {
     var body: some View {
         ScrollView(.vertical) {
             VStack(spacing: 16) {
-                ScrollView(.horizontal) {
-                    HStack(spacing: 8) {
-                        ForEach(Category.allCases, id: \.id) { category in
-                            HStack{
-                                CategoryIcon(category: category, action: {print("botao funcionando")})
-                                    .accessibilityLabel("\(category) double click to enter")
-                            }
+                HStack(spacing: CGFloat(iconPrefixDistance)) {
+                    ForEach(Category.allCases.prefix(iconPrefixCount), id: \.id) { category in
+                        HStack{
+                            CategoryIcon(category: category, action: {print("botao funcionando")})
+                                .accessibilityLabel("\(category) double click to enter")
                         }
                     }
                 }
-                .scrollIndicators(.hidden)
-                .contentMargins(.leading, 16)
-                .padding(.top, 16)
                 
                 ForEach(viewModel.filteredCategories, id: \.self) { category in
                     categoryList(category: category)
@@ -54,12 +64,12 @@ struct CategoriesScreen: View {
                         .accessibilityLabel("\(category) double click to enter")
                     Divider()
                 }
-                .padding(.horizontal, 16)
             }
             .navigationTitle("Categories")
             .navigationBarTitleDisplayMode(.large)
-            .padding(.horizontal, 0)
+            .padding(.horizontal, CGFloat(screenPadding))
             .searchable(text: $viewModel.searchText, prompt: "Search")
+            .padding(.top, CGFloat(iconPrefixDistance))
             
         }
     }

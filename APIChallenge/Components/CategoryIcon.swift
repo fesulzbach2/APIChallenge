@@ -19,11 +19,11 @@ struct CategoryIcon: View {
             CategoryScreen(category: category, viewModel: CategoryViewModel(productService: ProductService(), favoriteService: FavoritesService()))
 
         } label: {
-            VStack(alignment: .center, spacing: 8) {
+            VStack(alignment: .center, spacing: 0) {
                 category.image
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 100, height: 100)
+                    .frame(width: 84, height: 84)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 
                 Text(category.rawValue)
@@ -31,7 +31,7 @@ struct CategoryIcon: View {
                     .typography(.subheadlineRegular)
                     .frame(minHeight: twoLineMinHeight, alignment: .leading)
             }
-            .frame(width: 100)
+            .frame(width: 84)
         }
         .buttonStyle(.plain)
         
@@ -39,5 +39,5 @@ struct CategoryIcon: View {
 }
 
 #Preview {
-    TabBar()
+    CategoryIcon(category: .Beauty, action: {print("öi")})
 }
