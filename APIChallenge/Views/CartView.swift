@@ -17,7 +17,7 @@ struct CartView: View {
         VStack {
             Spacer()
             if viewModel.cartProducts.isEmpty {
-                EmptyState(icon: "cart.badge.questionmark", headerText: "Your cart is empty!", footerText: "Add an item to your cart.")
+                EmptyState(icon: "cart.badge.questionmark")
                 Spacer()
             } else {
                 ScrollView {

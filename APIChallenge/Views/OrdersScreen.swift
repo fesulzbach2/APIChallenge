@@ -31,7 +31,7 @@ struct OrdersView: View {
             ScrollView {
                 VStack{
                     if(viewModel.orderedProducts.isEmpty) {
-                        EmptyState(icon: "suitcase", headerText: "No orders yet!", footerText: "Buy an item and it will show up here.")
+                        EmptyState(icon: "suitcase")
                     } else {
                         
                         ForEach(filteredProducts) { product in

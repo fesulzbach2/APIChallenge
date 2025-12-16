@@ -19,7 +19,7 @@ struct Favorites: View {
             VStack{
                 
                 if(viewModel.products.isEmpty) {
-                    EmptyState(icon: "heart.slash", headerText: "No favorites yet!", footerText: "Favorite an item and it will show up here.")
+                    EmptyState(icon: "heart.slash")
                     
                 } else {
                     

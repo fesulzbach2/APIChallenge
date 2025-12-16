@@ -10,8 +10,6 @@ import SwiftUI
 struct EmptyState: View {
     
     var icon: String = "cart.badge.questionmark"
-    var headerText: String = "Your cart is empty!"
-    var footerText: String = "Add an item to your cart."
     
     var body: some View {
         
@@ -23,11 +21,11 @@ struct EmptyState: View {
                 .foregroundStyle(.gray2)
             
             VStack(spacing: 16) {
-                Text(headerText)
+                Text("Your cart is empty!")
                     .fontWeight(.semibold)
                     .font(.system(size: 17))
                 
-                Text(footerText)
+                Text("Add an item to your cart.")
                     .fontWeight(.regular)
                     .font(.system(size: 17))
                     .foregroundStyle(.labelsSecondary)
