@@ -11,12 +11,17 @@ import UIKit
 #endif
 
 struct CategoriesScreen: View {
-
+    
     
     @State var viewModel: CategoriesViewModel
     
     private var iconPrefixCount: Int {
-        UIDevice.current.userInterfaceIdiom == .pad ? 8 : 4
+        if (UIDevice.current.userInterfaceIdiom == .pad) {
+            let isLandscape = UIScreen.main.bounds.width > UIScreen.main.bounds.height
+            return isLandscape ? 10 : 8
+        } else {
+            return 4
+        }
     }
     
     private var iconPrefixDistance: Int {
